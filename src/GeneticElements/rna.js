@@ -5,16 +5,16 @@ const canvaW = 500,
 const scale = 1;
 
 // invoke Data
-let adnX = 10;
+let adnX = 0;
 let adnY = 100;
 let adnSize = canvaW;
 let adnScalar = 1000; //bp on adn track
-let separation = 10;
+let separation = 30;
 let x = 0; //leftPosition
 // gene data
 let name = "rna";
 let size = 10;
-let strand = "forwar"; // default forward
+let strand = "reverse"; // default forward
 
 // draw data
 let color = "#000";
@@ -32,22 +32,22 @@ const adn = draw
 
 //draw RNA
 const rnaH = 60;
-//const ys = sizeP;
+
 var rna = draw.rect(rnaH, rnaH / 3);
 
 //position & stroke
 let y = adnY - separation - 20;
 let xi = x + adnX;
-rna.fill(color);
+rna.fill("none");
 rna.stroke(stroke).move(xi, y);
 
 //draw lines
 const lx = x + adnX;
-const ly = adnY - separation - rnaH / 3 - 20;
+const ly = adnY - separation;
 var linea1 = draw
   .line(10, 0, 10, rnaH / 3)
   .stroke(stroke)
-  .move(lx, ly);
+  .move(lx + 60, ly);
 var linea2 = draw
   .line(10, 0, 10, rnaH / 3)
   .stroke(stroke)
@@ -69,8 +69,16 @@ var linea6 = draw
   .stroke(stroke)
   .move(lx + 50, ly);
 
+// name draw
+const text = draw.text(name);
+text.font({
+  family: "Arial",
+  size: 18,
+  separation: "middle"
+});
+
 //strand effect
-if (strand === "forward") {
+if (strand === "reverse") {
   var group = draw.group();
   group.add(rna);
   group.add(linea1);
@@ -80,5 +88,8 @@ if (strand === "forward") {
   group.add(linea5);
   group.add(linea6);
 
-  group.rotate(180).move(x + adnX, adnY - separation);
+  group.rotate(180).move(xi, adnY - separation - rnaH - 20);
+  text.move(xi + rnaH / 4, adnY + rnaH - 10);
+} else {
+  text.move(xi + rnaH / 4, adnY - rnaH - 10);
 }
