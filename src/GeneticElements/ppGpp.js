@@ -12,33 +12,33 @@ let adnScalar = 1000; //bp on adn track
 let separation = 10;
 let x = 10; //leftPosition
 
-// Tf_binding data
-let name = "Tf binding";
-let size = 50;
+// ppGpp data
+let name = "ppGpp";
+let size = 100;
 let strand = "revers"; // default forward
 
 // draw data
-let color = "red";
+let color = "green";
 let stroke = { color: "#000", width: 3, linecap: "round", linejoin: "round" };
 let sizeP = (size * adnSize) / adnScalar;
 if (sizeP <= 20) {
   sizeP = 20;
 }
 //Canvas Create
-const draw = SVG().addTo("#TFbindingsite").size(adnSize, canvaH);
+const draw = SVG().addTo("#ppGpp").size(adnSize, canvaH);
 // DNA Create
 const adn = draw
   .line(adnX, adnY, adnSize, adnY)
   .stroke({ color: "#f06", width: 2, linecap: "round" });
 
-//draw TF_binding
-const tfH = sizeP;
-var tfy = sizeP / 2;
-var tf_binding = draw.rect(tfH, tfy);
+//draw ppGpp
+let ppGppH = sizeP;
+let ppGppy = sizeP / 2;
+var ppGpp = draw.ellipse(ppGppH, ppGppy);
 
 //stroke
-tf_binding.stroke(stroke);
-tf_binding.fill(color);
+ppGpp.stroke(stroke);
+ppGpp.fill(color);
 
 /*// name draw
 const text = draw.text(name);
@@ -51,11 +51,11 @@ text.font({
 
 //strand effect
 let xi = x + adnX;
-let y = adnY - separation - tfy;
+let y = adnY - separation - ppGppy;
 if (strand === "reverse") {
-  tf_binding.move(x + adnX, adnY + separation);
+  ppGpp.move(x + adnX, adnY + separation);
   //text.move(xi + tf_binding / 4, adnY + tf_binding - 10);
 } else {
-  tf_binding.move(xi, y);
+  ppGpp.move(xi, y);
   //text.move(xi + tf_binding / 4, adnY - tf_binding - 10);
 }

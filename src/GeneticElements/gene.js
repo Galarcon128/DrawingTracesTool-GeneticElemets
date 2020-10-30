@@ -12,11 +12,11 @@ let adnX = 0;
 let adnY = 100;
 let adnSize = canvaW;
 let adnScalar = 1000; //bp on adn track
-let separation = 10;
+let separation = 0;
 let x = 0; //leftPosition
 // gene data
 let name = "araC";
-let size = 879;
+let size = 900;
 let strand = "revers"; // default forward
 // draw data
 let color = "aqua";

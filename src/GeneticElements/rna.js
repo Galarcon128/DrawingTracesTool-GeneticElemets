@@ -9,12 +9,13 @@ let adnX = 0;
 let adnY = 100;
 let adnSize = canvaW;
 let adnScalar = 1000; //bp on adn track
-let separation = 30;
+let separation = 10;
 let x = 0; //leftPosition
-// gene data
+
+// rna data
 let name = "rna";
-let size = 10;
-let strand = "reverse"; // default forward
+let size = 100;
+let strand = "revers"; // default forward
 
 // draw data
 let color = "#000";
@@ -31,43 +32,56 @@ const adn = draw
   .stroke({ color: "#f06", width: 2, linecap: "round" });
 
 //draw RNA
-const rnaH = 60;
+const rnax = sizeP;
+var rnay = 10;
+if (rnay >= 10) {
+  rnay = 10;
+}
+var rna = draw.rect(rnax, rnay);
 
-var rna = draw.rect(rnaH, rnaH / 3);
+//stroke
+rna.stroke(stroke);
+rna.fill("color");
 
-//position & stroke
-let y = adnY - separation - 20;
+//draw lines properties
+
+const ly = adnY - separation - rnay;
+
+let l = x + adnX + sizeP;
+let i = l - sizeP / 5;
+let n = i - sizeP / 5;
+let e = n - sizeP / 5;
+let s = e - sizeP / 5;
+let p = s - sizeP / 5;
+
+var line1 = draw
+  .line(l, 0, l, rnay * 2)
+  .stroke(stroke)
+  .move(l, ly);
+var line2 = draw
+  .line(i, 0, i, rnay * 2)
+  .stroke(stroke)
+  .move(i, ly);
+var line3 = draw
+  .line(n, 0, n, rnay * 2)
+  .stroke(stroke)
+  .move(n, ly);
+var line4 = draw
+  .line(e, 0, e, rnay * 2)
+  .stroke(stroke)
+  .move(e, ly);
+var line5 = draw
+  .line(s, 0, s, rnay * 2)
+  .stroke(stroke)
+  .move(s, ly);
+var line6 = draw
+  .line(p, 0, p, rnay * 2)
+  .stroke(stroke)
+  .move(p, ly);
+
 let xi = x + adnX;
-rna.fill("none");
-rna.stroke(stroke).move(xi, y);
-
-//draw lines
-const lx = x + adnX;
-const ly = adnY - separation;
-var linea1 = draw
-  .line(10, 0, 10, rnaH / 3)
-  .stroke(stroke)
-  .move(lx + 60, ly);
-var linea2 = draw
-  .line(10, 0, 10, rnaH / 3)
-  .stroke(stroke)
-  .move(lx + 10, ly);
-var linea3 = draw
-  .line(10, 0, 10, rnaH / 3)
-  .stroke(stroke)
-  .move(lx + 20, ly);
-var linea4 = draw
-  .line(10, 0, 10, rnaH / 3)
-  .stroke(stroke)
-  .move(lx + 30, ly);
-var linea5 = draw
-  .line(10, 0, 10, rnaH / 3)
-  .stroke(stroke)
-  .move(lx + 40, ly);
-var linea6 = draw
-  .line(10, 0, 10, rnaH / 3)
-  .stroke(stroke)
-  .move(lx + 50, ly);
+let y = adnY - separation;
+rna.move(xi, y);
 
 // name draw
 const text = draw.text(name);
@@ -79,17 +93,31 @@ text.font({
 
 //strand effect
 if (strand === "reverse") {
-  var group = draw.group();
-  group.add(rna);
-  group.add(linea1);
-  group.add(linea2);
-  group.add(linea3);
-  group.add(linea4);
-  group.add(linea5);
-  group.add(linea6);
+  var reversegroup = draw.group();
+  reversegroup.add(rna);
+  reversegroup.add(line1);
+  reversegroup.add(line2);
+  reversegroup.add(line3);
+  reversegroup.add(line4);
+  reversegroup.add(line5);
+  reversegroup.add(line6);
 
-  group.rotate(180).move(xi, adnY - separation - rnaH - 20);
-  text.move(xi + rnaH / 4, adnY + rnaH - 10);
+  reversegroup.rotate(360);
+  reversegroup.move(x + adnX, adnY + separation);
+
+  text.move(x + adnX + sizeP / 4, adnY + separation + rnay + 10);
 } else {
-  text.move(xi + rnaH / 4, adnY - rnaH - 10);
+  var forwardgroup = draw.group();
+  forwardgroup.add(rna);
+  forwardgroup.add(line1);
+  forwardgroup.add(line2);
+  forwardgroup.add(line3);
+  forwardgroup.add(line4);
+  forwardgroup.add(line5);
+  forwardgroup.add(line6);
+
+  forwardgroup.rotate(180);
+  forwardgroup.move(x + adnX, adnY - separation);
+  text.move(x + adnX + sizeP / 4, adnY - 50);
 }
+//console.log(size);
