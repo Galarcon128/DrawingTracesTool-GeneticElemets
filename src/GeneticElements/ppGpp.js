@@ -13,11 +13,12 @@ let separation = 10;
 let x = 10; //leftPosition
 
 // ppGpp data
-let name = "ppGpp";
+let name = "DksA";
 let size = 100;
 let strand = "revers"; // default forward
 
 // draw data
+let opacity = 0.9;
 let color = "green";
 let stroke = { color: "#000", width: 3, linecap: "round", linejoin: "round" };
 let sizeP = (size * adnSize) / adnScalar;
@@ -48,14 +49,22 @@ text.font({
   separation: "middle"
 });
 */
-
-//strand effect
 let xi = x + adnX;
 let y = adnY - separation - ppGppy;
+if (name === "DksA") {
+  var DksA = draw.ellipse(ppGppH, ppGppy);
+  DksA.stroke(stroke).move(xi, y);
+  DksA.fill(color);
+  DksA.opacity(opacity);
+  ppGpp.stroke(stroke).move(x + adnX + ppGppH - 10, y);
+  ppGpp.fill(color);
+}
+
+//strand effect
+
 if (strand === "reverse") {
-  ppGpp.move(x + adnX, adnY + separation);
+  ppGpp.move(x + adnX + ppGppH - 10, adnY + separation);
+  DksA.move(x + adnX, adnY + separation);
+
   //text.move(xi + tf_binding / 4, adnY + tf_binding - 10);
-} else {
-  ppGpp.move(xi, y);
-  //text.move(xi + tf_binding / 4, adnY - tf_binding - 10);
 }

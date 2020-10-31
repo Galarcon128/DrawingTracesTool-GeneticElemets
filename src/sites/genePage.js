@@ -1,7 +1,7 @@
 import { SVG } from "@svgdotjs/svg.js";
 import Gene from "../functions/drawGene";
 
-const adnSize = 10000;
+const adnSize = 1000;
 const canvaH = 300;
 let adnX = 0;
 let adnY = 100;

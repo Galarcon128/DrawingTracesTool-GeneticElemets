@@ -18,7 +18,7 @@ draw
   .line(adnX, adnY, canvaW, adnY)
   .stroke({ color: "#f06", width: 2, linecap: "round" });
 
-//terminador data
+//Transnational data
 let name = "terminador";
 let size = 50;
 let strand = "revers"; // default forward
@@ -54,7 +54,7 @@ var body = draw.path(
     -altura
 );
 let bodyX = x + adnX;
-let bodyY = adnY - altura - 5;
+let bodyY = adnY - altura - separation;
 body.fill(color).move(bodyX, bodyY);
 body.stroke(stroke);
 body.opacity(opacity);
@@ -64,7 +64,7 @@ let headH = 30;
 var head = draw.circle(headH);
 
 let headX = adnX + x + (hline - 6);
-let headY = adnY - altura - 35;
+let headY = adnY - altura - separation - 25;
 head.fill(color).move(headX, headY);
 head.stroke(stroke);
 head.opacity(opacity);
