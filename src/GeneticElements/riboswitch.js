@@ -85,11 +85,12 @@ let adnY = 100;
 let adnSize = canvaW;
 let adnScalar = 1000; //bp on adn track
 let separation = 10;
-let x = 0; //leftPosition
+let x = 10; //leftPosition
 // gene data
 let name = "araC";
-let size = 879;
+let size = 50;
 let strand = "revers"; // default forward
+
 // draw data
 let color = "green";
 let opacity = 1;
@@ -136,31 +137,13 @@ body.fill(color).move(bodyX, bodyY);
 body.stroke(stroke);
 body.opacity(opacity);
 
+if (size < 20) {
+  head.scale(0.6).move(headX - 8, headY + 10);
+}
+
 if (strand === "reverse") {
   var group = draw.group();
   group.add(head);
   group.add(body);
   group.rotate(180).move(x + adnX, headY - altura - 34);
 }
-
-/*
-var color2 = "blue";
-var altura2 = 1;
-var h2 = draw.path(
-  "m 69.032005,294.75871 v 0 c 3.92467,-2.58104 6.63901,-6.13644 7.20008,-10.80012 l 9.14425,-4.37876 c 1.42935,0.40589 2.95449,0.31099 4.3225,-0.26895 3.31023,-1.40895 4.85186,-5.23431 3.44359,-8.54482 -1.40895,-3.31119 -5.23558,-4.85302 -8.54657,-3.44359 -1.56071,0.66486 -2.80056,1.91226 -3.45591,3.47699 l -7.00846,3.09906 c -2.82997,-4.98758 -8.11898,-8.07267 -13.85349,-8.08076 v 0 c -5.97645,0.006 -11.44813,3.35249 -14.17691,8.66963 l -6.84675,-3.04808 c -0.0709,-0.24923 -0.15661,-0.494 -0.25664,-0.73302 -1.40897,-3.31022 -5.23432,-4.85185 -8.54483,-3.44359 -3.31119,1.40895 -4.85303,5.23559 -3.44359,8.54658 1.25369,2.93501 4.44902,4.5297 7.54813,3.76703 l 9.27431,4.38228 c 0.61115,4.33052 3.63944,8.26071 7.20009,10.80012"
-);
-h2.fill(color2).move(10, 10);
-h2.stroke(stroke);
-h2.opacity(opacity);
-
-var body2 = draw.path(
-  "m 51.031805,294.75871 c 0,0 0,0 0,0 v " +
-    (altura2 + 80) +
-    " h -18.00021 v 5.40006 h 54.00062 v -5.40006 h -18.00021 v " +
-    (-80 - altura2)
-);
-body2.fill(color2).move(16.5, 39);
-body2.stroke(stroke);
-body2.scale(1, 1);
-body2.opacity(opacity);
-*/

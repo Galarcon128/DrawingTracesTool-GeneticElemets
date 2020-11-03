@@ -10,12 +10,12 @@ let adnY = 100;
 let adnSize = canvaW;
 let adnScalar = 1000; //bp on adn track
 let separation = 10;
-let x = 10; //leftPosition
+let x = 0; //leftPosition
 
 // ppGpp data
 let name = "DksA";
-let size = 100;
-let strand = "revers"; // default forward
+let size = 150;
+let strand = "forward"; // default forward
 
 // draw data
 let opacity = 0.9;
@@ -37,9 +37,13 @@ let ppGppH = sizeP;
 let ppGppy = sizeP / 2;
 var ppGpp = draw.ellipse(ppGppH, ppGppy);
 
-//stroke
+//stroke & positions
 ppGpp.stroke(stroke);
 ppGpp.fill(color);
+let xi = x + adnX;
+let fy = adnY - separation - ppGppy;
+let ry = adnY + separation;
+let bx = xi + ppGppH - 10;
 
 /*// name draw
 const text = draw.text(name);
@@ -49,22 +53,28 @@ text.font({
   separation: "middle"
 });
 */
-let xi = x + adnX;
-let y = adnY - separation - ppGppy;
-if (name === "DksA") {
-  var DksA = draw.ellipse(ppGppH, ppGppy);
-  DksA.stroke(stroke).move(xi, y);
-  DksA.fill(color);
-  DksA.opacity(opacity);
-  ppGpp.stroke(stroke).move(x + adnX + ppGppH - 10, y);
-  ppGpp.fill(color);
-}
 
 //strand effect
+if (name === "DksA" && strand === "forward") {
+  var DksAf = draw.ellipse(ppGppH, ppGppy);
+  DksAf.stroke(stroke);
+  DksAf.fill(color);
+  DksAf.opacity(opacity);
+  DksAf.move(xi, fy);
+  ppGpp.stroke(stroke).move(bx, fy);
+} else if (name === "ppGpp" && strand === "forward") {
+  ppGpp.move(xi, fy);
+}
 
-if (strand === "reverse") {
-  ppGpp.move(x + adnX + ppGppH - 10, adnY + separation);
-  DksA.move(x + adnX, adnY + separation);
+if (name === "DksA" && strand === "reverse") {
+  var DksAr = draw.ellipse(ppGppH, ppGppy);
+  DksAr.stroke(stroke);
+  DksAr.fill(color);
+  DksAr.opacity(opacity);
+  DksAr.move(xi, ry);
+  ppGpp.move(bx, ry);
 
   //text.move(xi + tf_binding / 4, adnY + tf_binding - 10);
+} else if (name === "ppGpp" && strand === "reverse") {
+  ppGpp.move(xi, ry);
 }
