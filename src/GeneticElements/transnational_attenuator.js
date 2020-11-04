@@ -19,8 +19,8 @@ draw
   .stroke({ color: "#f06", width: 2, linecap: "round" });
 
 //Transnational data
-let name = "terminador";
-let size = 50;
+let name = "transnationalAttenuator";
+let size = 10;
 let strand = "revers"; // default forward
 
 // draw data
@@ -28,33 +28,31 @@ let color = "aqua";
 let opacity = 1;
 let stroke = { color: "#000", width: 2, linecap: "round", linejoin: "round" };
 let sizeP = (size * adnSize) / adnScalar;
-if (sizeP <= 30) {
-  sizeP = 30;
-}
-var altura = 60;
-let hline = 1;
-if (size >= 20) {
-  hline = size / 2 - 9;
+if (sizeP <= 20) {
+  sizeP = 20;
 }
 
-let ancho = size;
-if (ancho < 20) {
-  ancho = 20;
+//Transnaional draw data
+var altura = 60 + separation;
+let hline = 1;
+if (sizeP >= 20) {
+  hline = sizeP / 2 - 9;
 }
+//draw body
 var body = draw.path(
   "M 0,0 v " +
     altura +
     " h -" +
     hline +
     " v 5 h " +
-    ancho +
+    sizeP +
     " v -5 h -" +
     hline +
     " v " +
     -altura
 );
 let bodyX = x + adnX;
-let bodyY = adnY - altura - separation;
+let bodyY = adnY - altura - 5;
 body.fill(color).move(bodyX, bodyY);
 body.stroke(stroke);
 body.opacity(opacity);
@@ -64,7 +62,7 @@ let headH = 30;
 var head = draw.circle(headH);
 
 let headX = adnX + x + (hline - 6);
-let headY = adnY - altura - separation - 25;
+let headY = adnY - altura - 30;
 head.fill(color).move(headX, headY);
 head.stroke(stroke);
 head.opacity(opacity);
@@ -84,8 +82,8 @@ if (ly < 20) {
 }
 var rect = draw.rect(lx, ly);
 
-let rectX = adnX + x + (hline + 10);
-let rectY = adnY - separation - altura + 10;
+let rectX = adnX + x + (hline + lx - 5);
+let rectY = adnY - altura + 10;
 rect.fill(color).move(rectX, rectY);
 rect.stroke(stroke);
 
@@ -94,5 +92,5 @@ if (strand === "reverse") {
   group.add(head);
   group.add(body);
   group.add(rect);
-  group.rotate(180).move(x + adnX, headY - altura - 34);
+  group.rotate(180).move(x + adnX, headY - altura - 30);
 }

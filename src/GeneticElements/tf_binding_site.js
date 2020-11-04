@@ -9,12 +9,12 @@ let adnX = 0;
 let adnY = 100;
 let adnSize = canvaW;
 let adnScalar = 1000; //bp on adn track
-let separation = 10;
-let x = 10; //leftPosition
+let separation = 0;
+let x = 0; //leftPosition
 
 // Tf_binding data
-let name = "Tf binding";
-let size = 50;
+let name = "Tf_binding";
+let size = 100;
 let strand = "revers"; // default forward
 
 // draw data
@@ -40,22 +40,23 @@ var tf_binding = draw.rect(tfH, tfy);
 tf_binding.stroke(stroke);
 tf_binding.fill(color);
 
-/*// name draw
+// name draw
 const text = draw.text(name);
 text.font({
   family: "Arial",
-  size: 18,
+  size: 10,
   separation: "middle"
 });
-*/
+const nlet = name.length;
 
 //strand effect
 let xi = x + adnX;
-let y = adnY - separation - tfy;
+let y = adnY - tfy - separation;
+
 if (strand === "reverse") {
-  tf_binding.move(x + adnX, adnY + separation);
-  //text.move(xi + tf_binding / 4, adnY + tf_binding - 10);
+  tf_binding.move(xi, adnY);
+  text.move(xi + tf_binding / 2, adnY + tfy / 2 + separation);
 } else {
   tf_binding.move(xi, y);
-  //text.move(xi + tf_binding / 4, adnY - tf_binding - 10);
+  text.move(xi + sizeP / 2 - nlet * 2 - 4, adnY - tfy / 2 - separation);
 }

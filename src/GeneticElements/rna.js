@@ -33,7 +33,7 @@ const adn = draw
 
 //draw RNA
 const rnax = sizeP;
-var rnay = 10;
+var rnay = 50;
 if (rnay >= 10) {
   rnay = 10;
 }
@@ -101,7 +101,6 @@ if (strand === "reverse") {
   reversegroup.add(line4);
   reversegroup.add(line5);
   reversegroup.add(line6);
-
   reversegroup.rotate(360);
   reversegroup.move(x + adnX, adnY + separation);
 

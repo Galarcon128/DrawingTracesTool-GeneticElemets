@@ -1,5 +1,8 @@
 import { SVG } from "@svgdotjs/svg.js";
 import Gene from "../functions/drawGene";
+import Promoter from "../functions/drawPromoter";
+import Transnational_Attenuator from "../functions/drawTransnationalAttenuator";
+import TF_binding_site from "../functions/drawTF_Binding_site";
 
 const adnSize = 1000;
 const canvaH = 300;
@@ -36,6 +39,7 @@ Gene({
   size: g1size
 });
 
+//Gene araB
 const g2Name = "araB";
 const g2posL = 68348;
 const g2posR = 70048;
@@ -56,6 +60,7 @@ Gene({
   size: g2size
 });
 
+//Gene araC
 const g3Name = "araC";
 const g3posL = 70387;
 const g3posR = 71265;
@@ -74,4 +79,65 @@ Gene({
   name: g3Name,
   strand: g3strand,
   size: g3size
+});
+
+//Promoter araBp
+const p1Name = "araBp";
+const p1size = 70075;
+const p1strand = "reverse";
+const p1separation = 70;
+const p1x = ((p1size - adnposL) * adnSize) / adnScalar;
+Promoter({
+  canva: canva,
+  adnX: adnX,
+  adnY: adnY,
+  adnSize: adnSize,
+  adnScalar: adnScalar,
+  separation: p1separation,
+  x: p1x,
+  name: p1Name,
+  strand: p1strand,
+  size: p1size
+});
+
+//Transnational Attenuator Terminator
+const taName = "Tansnational Attenuator Terminator";
+const taposL = 70049;
+const taposR = 70086;
+const tasize = taposR - taposL;
+const tastrand = "reverse";
+const taseparation = 0;
+const tax = ((taposL - adnposL) * adnSize) / adnScalar; //leftPosition
+Transnational_Attenuator({
+  canva: canva,
+  adnX: adnX,
+  adnY: adnY,
+  adnSize: adnSize,
+  adnScalar: adnScalar,
+  separation: taseparation,
+  x: tax,
+  name: taName,
+  strand: tastrand,
+  size: tasize
+});
+
+//TFBS AraC
+const tf1Name = "TFBS AraC";
+const tf1posL = 70049;
+const tf1posR = 70086;
+const tf1size = taposR - taposL;
+const tf1strand = "reverse";
+const tf1separation = 0;
+const tf1x = ((tf1posL - adnposL) * adnSize) / adnScalar; //leftPosition
+TF_binding_site({
+  canva: canva,
+  adnX: adnX,
+  adnY: adnY,
+  adnSize: adnSize,
+  adnScalar: adnScalar,
+  separation: tf1separation,
+  x: tf1x,
+  name: tf1Name,
+  strand: tf1strand,
+  size: tf1size
 });

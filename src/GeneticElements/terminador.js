@@ -20,22 +20,22 @@ draw
 
 //terminador data
 let name = "terminador";
-let size = 30;
+let size = 40;
 let strand = "revers"; // default forward
 
 // draw data
 let opacity = 1;
 let stroke = { color: "#000", width: 1, linecap: "round", linejoin: "round" };
 let sizeP = (size * adnSize) / adnScalar;
-if (sizeP <= 30) {
-  sizeP = 30;
+if (sizeP <= 20) {
+  sizeP = 20;
 }
-var altura = 60;
 
 let hline = 1;
-if (size >= 20) {
-  hline = size / 2 - 9;
+if (sizeP >= 20) {
+  hline = sizeP / 2 - 9;
 }
+var altura = 60 + separation;
 var head = draw.path(
   "M 23.2 28 L 23.2 27.1 A 14.7 14.7 0 0 0 30 14.7 A 14.7 14.7 0 0 0 15.2 0 L 15.2 0 A 14.7 14.7 0 0 0 0.5 14.7 A 14.7 14.7 0 0 0 7.2 27.1 L 7.2 28"
 );
@@ -45,17 +45,13 @@ head.fill("none").move(headX, headY);
 head.stroke(stroke);
 head.opacity(opacity);
 
-let ancho = size;
-if (ancho < 20) {
-  ancho = 20;
-}
 var body = draw.path(
   "M 0,0 v " +
     altura +
     " h -" +
     hline +
     " v 5 h " +
-    ancho +
+    sizeP +
     " v -5 h -" +
     hline +
     " v " +

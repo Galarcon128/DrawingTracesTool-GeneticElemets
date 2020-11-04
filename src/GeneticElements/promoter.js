@@ -6,30 +6,28 @@ const canvaW = 500,
 const scale = 1;
 
 // invoke Data
-let adnX = 10;
+let adnX = 0;
 let adnY = 100;
 let adnSize = canvaW;
 let adnScalar = 1000; //bp on adn track
-let separation = 10;
+let separation = 0;
 let x = 0; //leftPosition
 // gene data
 let name = "Promoter";
-let size = 100;
-if (size <= 100) {
-  size = 100;
-}
 let strand = "revers"; // default forward
 
 // draw data
-let color = "aqua";
-let opacity = 1;
-let stroke = { color: "#000", width: 1, linecap: "round", linejoin: "round" };
-let sizeP = (size * adnSize) / adnScalar;
-if (sizeP <= 30) {
-  sizeP = 30;
-}
+let stroke = {
+  color: "#000",
+  width: 1,
+  linecap: "round",
+  linejoin: "round",
+  dasharray: 3
+};
+
 //Canvas Create
 const draw = SVG().addTo("#promoter").size(adnSize, canvaH);
+
 // DNA Create
 const adn = draw
   .line(adnX, adnY, adnSize, adnY)
@@ -37,29 +35,19 @@ const adn = draw
 
 //Promoter draw parameters
 const horizontal = 30;
-
-var promoter = draw.path(
-  "M" +
-    (x + adnX) +
-    "," +
-    size +
-    "V " +
-    sizeP +
-    "H " +
-    (horizontal + x + adnX) +
-    "v"
-);
+let altura = 40 + separation;
+var promoter = draw.path("M 0 0 V " + -altura + "H " + horizontal + "v");
 let px = x + adnX;
-let py = -separation + adnY - size + sizeP;
+let py = adnY - altura;
 
 promoter.fill("none").move(px, py);
 promoter.stroke(stroke);
 
 //Draw little arrow
-var arrow = draw.path("m 65,45 5,5 -5,5 v 0");
+var arrow = draw.path("m 0,0 5,5 -5,5 v 0");
 
-let ax = x + adnX + horizontal - 5;
-let ay = -separation + adnY - sizeP - 5;
+let ax = x + adnX + horizontal - 4;
+let ay = adnY - altura - 5;
 arrow.fill("none").move(ax, ay);
 arrow.stroke(stroke);
 
@@ -71,12 +59,13 @@ text.font({
   separation: "middle"
 });
 
+//strand effect
 if (strand === "reverse") {
   var group = draw.group();
   group.add(arrow).move(ax, ay);
-  group.add(promoter).move(x + adnX - horizontal, adnY + separation);
-  text.move(x + adnX - horizontal, adnY + separation + sizeP + 5);
+  group.add(promoter).move(x + adnX - horizontal, adnY);
   group.rotate(180);
+  text.move(x + adnX - horizontal, adnY + altura + 5);
 } else {
-  text.move(x + adnX - horizontal + 20, adnY - separation - sizeP - 10);
+  text.move(x + adnX, adnY - altura - 15);
 }

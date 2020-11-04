@@ -7,7 +7,7 @@ const scale = 1;
 
 // invoke Data
 let adnX = 0;
-let adnY = 150;
+let adnY = 100;
 let adnSize = canvaW;
 let adnScalar = 1000; //bp on adn track
 let separation = 10;
@@ -19,20 +19,19 @@ draw
   .stroke({ color: "#f06", width: 2, linecap: "round" });
 
 //Transnational data
-let name = "terminador";
-let size = 100;
+let name = "transcriptional_attenuator";
+let size = 10;
 let strand = "revers"; // default forward
 
 // draw data
 let color = "none";
-let opacity = 1;
 let stroke = { color: "#000", width: 2, linecap: "round", linejoin: "round" };
 let sizeP = (size * adnSize) / adnScalar;
 if (sizeP <= 30) {
   sizeP = 30;
 }
 //draw Transcriptional
-var altura = 40;
+var altura = 40 + separation;
 let hline = 0;
 if (sizeP >= 30) {
   hline = sizeP / 2 - 15;
@@ -52,12 +51,11 @@ var body = draw.path(
     -altura
 );
 let bodyX = x + adnX;
-let bodyY = adnY - altura - separation;
+let bodyY = adnY - altura - 5;
 body.fill("none").move(bodyX, bodyY);
 body.stroke(stroke);
 
-//draw head
-
+//draw heads
 var head1 = draw.path(
   "m 25 55 c -11.9 -9.5 -5 -23 1.6 -25. l 0.0 -1.7 C 30 24.6 33.4 20 33.4 15 C 33.4 6.8 26.8 0.2 18.6 0.2 v 0 C 10.5 0.250109 3.90831 6.8556 3.9082 15.0039 C 3.91361 20.0093 5.7943 24.6707 10 27.3848 v 0.865234 v 26.75"
 );
@@ -71,23 +69,20 @@ head.add(head2);
 head.fill(color).stroke(stroke);
 
 let headX = x + adnX + hline - 6;
-let headY = adnY - separation - 96;
+let headY = adnY - separation - 100;
 head.move(headX, headY);
 
 //draw middle line
-var line = draw.path("m 10 -5" + "V" + altura + "");
+var line = draw.path("m 0 -5 V" + altura + "");
 
 let lineX = x + adnX + sizeP / 2;
-let lineY = adnY - separation - altura;
+let lineY = adnY - altura - 5;
 line.stroke(stroke).move(lineX, lineY);
 
-/*if (strand === "reverse") {
+if (strand === "reverse") {
   var group = draw.group();
   group.add(head);
   group.add(body);
-  group.rotate(180).move(x + adnX, headY - altura - 34);
+  group.add(line);
+  group.rotate(180).move(x + adnX, headY - altura - 60);
 }
-*/
-
-console.log(size);
-console.log(sizeP);
