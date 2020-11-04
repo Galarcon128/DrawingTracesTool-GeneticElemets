@@ -9,7 +9,7 @@ export default function DrawTFBindingSite({
   name = "geneName",
   size = 100,
   strand = "forward",
-  color = "blue",
+  color = "none",
   opacity = 1,
   stroke = { color: "#000", width: 1, linecap: "round" }
 }) {
@@ -22,9 +22,7 @@ export default function DrawTFBindingSite({
   }
 
   const tfH = sizeP;
-  var tfy = sizeP / 2;
-  var tf_binding = canva.rect(tfH, tfy);
-
+  let tf_binding = canva.rect(tfH, 20);
   tf_binding.stroke(stroke);
   tf_binding.fill(color);
 
@@ -39,13 +37,13 @@ export default function DrawTFBindingSite({
 
   //strand effect
   let xi = x + adnX;
-  let y = adnY - tfy - separation;
+  let y = adnY - separation - 20;
 
   if (strand === "reverse") {
-    tf_binding.move(xi, adnY);
-    text.move(xi + tf_binding / 2, adnY + tfy / 2 + separation);
+    tf_binding.move(xi, adnY + separation);
+    text.move(xi + sizeP / 2 - nlet * 3, adnY + separation);
   } else {
     tf_binding.move(xi, y);
-    text.move(xi + sizeP / 2 - nlet * 2 - 4, adnY - tfy / 2 - separation);
+    text.move(xi + sizeP / 2 - nlet * 3, y);
   }
 }

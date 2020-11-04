@@ -122,11 +122,11 @@ Transnational_Attenuator({
 });
 
 //TFBS AraC
-const tf1Name = "TFBS AraC";
-const tf1posL = 70049;
-const tf1posR = 70086;
-const tf1size = taposR - taposL;
-const tf1strand = "reverse";
+const tf1Name = "AraC";
+const tf1posL = 70110;
+const tf1posR = 70126;
+const tf1size = tf1posR - tf1posL;
+const tf1strand = "revers";
 const tf1separation = 0;
 const tf1x = ((tf1posL - adnposL) * adnSize) / adnScalar; //leftPosition
 TF_binding_site({
@@ -139,5 +139,69 @@ TF_binding_site({
   x: tf1x,
   name: tf1Name,
   strand: tf1strand,
-  size: tf1size
+  size: tf1size,
+  color: "green"
+});
+
+const tf2Name = "AraC";
+const tf2posL = 70131;
+const tf2posR = 70147;
+const tf2size = tf2posR - tf2posL;
+const tf2strand = "revers";
+const tf2separation = 20;
+const tf2x = ((tf2posL - adnposL) * adnSize) / adnScalar; //leftPosition
+TF_binding_site({
+  canva: canva,
+  adnX: adnX,
+  adnY: adnY,
+  adnSize: adnSize,
+  adnScalar: adnScalar,
+  separation: tf2separation,
+  x: tf2x,
+  name: tf2Name,
+  strand: tf2strand,
+  size: tf2size,
+  color: "cyan"
+});
+
+const tf3Name = "CRP";
+const tf3posL = 70158;
+const tf3posR = 70179;
+const tf3size = tf3posR - tf3posL;
+const tf3strand = "revers";
+const tf3separation = 40;
+const tf3x = ((tf3posL - adnposL) * adnSize) / adnScalar; //leftPosition
+TF_binding_site({
+  canva: canva,
+  adnX: adnX,
+  adnY: adnY,
+  adnSize: adnSize,
+  adnScalar: adnScalar,
+  separation: tf3separation,
+  x: tf3x,
+  name: tf3Name,
+  strand: tf3strand,
+  size: tf3size,
+  color: "green"
+});
+
+const tf4Name = "Arac";
+const tf4posL = 70200;
+const tf4posR = 70250;
+const tf4size = tf4posR - tf4posL;
+const tf4strand = "revers";
+const tf4separation = 0;
+const tf4x = ((tf4posL - adnposL) * adnSize) / adnScalar; //leftPosition
+TF_binding_site({
+  canva: canva,
+  adnX: adnX,
+  adnY: adnY,
+  adnSize: adnSize,
+  adnScalar: adnScalar,
+  separation: tf4separation,
+  x: tf4x,
+  name: tf4Name,
+  strand: tf4strand,
+  size: tf4size,
+  color: "red"
 });
