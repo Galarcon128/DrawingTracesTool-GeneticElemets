@@ -1,5 +1,6 @@
 import "./styles.css";
 import "./GeneticElements/riboswitch";
+import "./GeneticElements/dna";
 import "./GeneticElements/gene";
 import "./GeneticElements/operon";
 import "./GeneticElements/promoter";
