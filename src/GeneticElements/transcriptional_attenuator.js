@@ -10,7 +10,7 @@ let adnX = 0;
 let adnY = 100;
 let adnSize = canvaW;
 let adnScalar = 1000; //bp on adn track
-let separation = 10;
+let separation = 0;
 let x = 10; //leftPosition
 
 var draw = SVG().addTo("#transcriptional").size(canvaW, canvaH);
@@ -20,7 +20,7 @@ draw
 
 //Transnational data
 let name = "transcriptional_attenuator";
-let size = 10;
+let size = 1000;
 let strand = "revers"; // default forward
 
 // draw data

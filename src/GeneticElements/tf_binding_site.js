@@ -9,21 +9,19 @@ let adnX = 0;
 let adnY = 100;
 let adnSize = canvaW;
 let adnScalar = 1000; //bp on adn track
-let separation = 0;
+let separation = 10;
 let x = 0; //leftPosition
 
 // Tf_binding data
 let name = "Tf_binding";
-let size = 100;
+let size = 7;
 let strand = "revers"; // default forward
 
 // draw data
 let color = "red";
 let stroke = { color: "#000", width: 3, linecap: "round", linejoin: "round" };
 let sizeP = (size * adnSize) / adnScalar;
-if (sizeP <= 20) {
-  sizeP = 20;
-}
+
 //Canvas Create
 const draw = SVG().addTo("#TFbindingsite").size(adnSize, canvaH);
 // DNA Create
@@ -58,5 +56,8 @@ if (strand === "reverse") {
   text.move(xi + tf_binding / 2, adnY + tfy / 2 + separation);
 } else {
   tf_binding.move(xi, y);
-  text.move(xi + sizeP / 2 - nlet * 2 - 4, adnY - tfy / 2 - separation);
+  text.move(
+    xi + sizeP / 2 - nlet * 2 - 4 + 25,
+    adnY - tfy / 2 - separation - 20
+  );
 }

@@ -17,9 +17,6 @@ export default function DrawTFBindingSite({
     return null;
   }
   let sizeP = (size * adnSize) / adnScalar;
-  if (sizeP <= 30) {
-    sizeP = 30;
-  }
 
   const tfH = sizeP;
   let tf_binding = canva.rect(tfH, 20);

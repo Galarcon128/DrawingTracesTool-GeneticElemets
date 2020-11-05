@@ -17,7 +17,7 @@ let x = 0; //leftPosition
 
 // riboswitch data
 let name = "riboswitch";
-let size = 10;
+let size = 50;
 let strand = "revers"; // default forward
 
 var draw = SVG().addTo("#riboswitch").size(canvaW, canvaH);
@@ -30,9 +30,6 @@ let color = "green";
 let opacity = 1;
 let stroke = { color: "#000", width: 1, linecap: "round", linejoin: "round" };
 let sizeP = (size * adnSize) / adnScalar;
-if (sizeP <= 20) {
-  sizeP = 20;
-}
 
 let hline = 1;
 if (sizeP >= 20) {
@@ -68,9 +65,12 @@ head.fill(color).move(headX, headY);
 head.stroke(stroke);
 head.opacity(opacity);
 
+var group = draw.group();
+group.add(head);
+group.add(body);
+
 if (strand === "reverse") {
-  var group = draw.group();
-  group.add(head);
-  group.add(body);
   group.rotate(180).move(x + adnX + (hline - 25), headY - altura - 34);
+} else {
+  group.move(x + adnX + (hline - 25), adnY - altura - 34);
 }

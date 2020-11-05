@@ -4,7 +4,7 @@ import Promoter from "../functions/drawPromoter";
 import Transnational_Attenuator from "../functions/drawTransnationalAttenuator";
 import TF_binding_site from "../functions/drawTF_Binding_site";
 
-const adnSize = 1000;
+const adnSize = 10000;
 const canvaH = 300;
 let adnX = 0;
 let adnY = 100;
@@ -14,10 +14,12 @@ let adnScalar = adnposR - adnposL; //bp on adn track
 
 const canva = SVG().addTo("#geneTesting").size(adnSize, canvaH);
 // DNA Create
-canva
+const dna = canva
   .line(adnX, adnY, adnSize, adnY)
   .stroke({ color: "#f06", width: 2, linecap: "round" });
 
+const strokeAraC = { color: "#000", width: 5, dasharray: 15 };
+const fontArac = { color: "#000" };
 // Gene araA
 const g1Name = "araA";
 const g1posL = 66835;
@@ -28,10 +30,7 @@ const g1separation = 0;
 const g1x = ((g1posL - adnposL) * adnSize) / adnScalar; //leftPosition
 Gene({
   canva: canva,
-  adnX: adnX,
-  adnY: adnY,
-  adnSize: adnSize,
-  adnScalar: adnScalar,
+  adn: dna,
   separation: g1separation,
   x: g1x,
   name: g1Name,
@@ -78,16 +77,21 @@ Gene({
   x: g3x,
   name: g3Name,
   strand: g3strand,
-  size: g3size
+  size: g3size,
+  color: "Red",
+  stroke: strokeAraC,
+  fill: {},
+  font: {}
 });
 
 //Promoter araBp
 const p1Name = "araBp";
 const p1size = 70075;
-const p1strand = "reverse";
-const p1separation = 70;
+const p1strand = "forward";
+const p1separation = 10;
 const p1x = ((p1size - adnposL) * adnSize) / adnScalar;
 Promoter({
+  id: "promotor",
   canva: canva,
   adnX: adnX,
   adnY: adnY,
@@ -118,7 +122,7 @@ Transnational_Attenuator({
   x: tax,
   name: taName,
   strand: tastrand,
-  size: tasize
+  size: 15
 });
 
 //TFBS AraC
@@ -127,16 +131,18 @@ const tf1posL = 70110;
 const tf1posR = 70126;
 const tf1size = tf1posR - tf1posL;
 const tf1strand = "revers";
-const tf1separation = 0;
+const tf1separation = 70;
 const tf1x = ((tf1posL - adnposL) * adnSize) / adnScalar; //leftPosition
 TF_binding_site({
+  id: "sadas",
   canva: canva,
+  anchor: "promotor",
   adnX: adnX,
   adnY: adnY,
   adnSize: adnSize,
   adnScalar: adnScalar,
   separation: tf1separation,
-  x: tf1x,
+  x: p1x,
   name: tf1Name,
   strand: tf1strand,
   size: tf1size,
@@ -161,7 +167,7 @@ TF_binding_site({
   name: tf2Name,
   strand: tf2strand,
   size: tf2size,
-  color: "cyan"
+  color: "#77a2ff"
 });
 
 const tf3Name = "CRP";
@@ -194,14 +200,12 @@ const tf4separation = 0;
 const tf4x = ((tf4posL - adnposL) * adnSize) / adnScalar; //leftPosition
 TF_binding_site({
   canva: canva,
-  adnX: adnX,
-  adnY: adnY,
-  adnSize: adnSize,
-  adnScalar: adnScalar,
+  anchor: "",
+  dna: dna,
   separation: tf4separation,
   x: tf4x,
   name: tf4Name,
   strand: tf4strand,
-  size: tf4size,
+  size: 7,
   color: "red"
 });

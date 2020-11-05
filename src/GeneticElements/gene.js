@@ -12,10 +12,10 @@ let adnX = 0;
 let adnY = 100;
 let adnSize = canvaW;
 let adnScalar = 1000; //bp on adn track
-let separation = 10;
-let x = 0; //leftPosition
+let separation = 0;
+let x = 100; //leftPosition
 // gene data
-let name = "araC";
+let name = "araB";
 let size = 500;
 let strand = "revers"; // default forward
 // draw data
@@ -66,6 +66,7 @@ const gene = draw.path(
 gene.fill(color);
 gene.stroke(stroke);
 gene.opacity(opacity);
+gene.id("gene");
 
 // name draw
 const text = draw.text(name);

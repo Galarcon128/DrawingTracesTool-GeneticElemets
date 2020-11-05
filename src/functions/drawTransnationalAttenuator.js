@@ -17,9 +17,7 @@ export default function DrawTransnationalAttenuator({
     return null;
   }
   let sizeP = (size * adnSize) / adnScalar;
-  if (sizeP <= 30) {
-    sizeP = 30;
-  }
+
   var altura = 60 + separation;
   let hline = 1;
   if (sizeP >= 20) {

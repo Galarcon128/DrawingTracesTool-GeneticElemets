@@ -82,8 +82,9 @@ if (strand === "reverse") {
   operon.move(xi, y);
 }
 
-let grup = draw.group();
+/*let grup = draw.group();
 grup.add(adn);
 grup.add(operon);
 grup.add(text);
 grup.scale(scale);
+*/
