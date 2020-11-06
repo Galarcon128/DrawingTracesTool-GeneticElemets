@@ -15,7 +15,7 @@ let dnaPosRight = 1000;
 let dnaScalar = dnaPosRight - dnaPosLeft; //bp on adn track
 
 // draw data
-let color = "#f06";
+let color = "#000";
 let opacity = 1;
 let stroke = { color: color, width: 1, linecap: "round" };
 let font = {
@@ -37,13 +37,13 @@ draw
   .text(dnaRletter)
   .font(font)
   .move(
-    canvaW - (font["size"] * dnaRletter.length) / 2 - 5,
+    canvaW - (font["size"] * dnaRletter.length) / 2 - 2,
     dnaY - font["size"] / 2
   );
 // DNA Create
 const adn = draw
   .line(
-    dnaX + (font["size"] * dnaLletter.length) / 2 + 7,
+    dnaX + (font["size"] * dnaLletter.length) / 2 + 5,
     dnaY,
     canvaW - (font["size"] * dnaRletter.length) / 2 - 7,
     dnaY

@@ -6,32 +6,35 @@ import TF_binding_site from "../functions/drawTF_Binding_site";
 import DNA from "../functions/drawDna";
 
 // DNA Create
-const dnaSize = 1000;
-const canvaH = 300;
+
+const canvaW = 1000,
+  canvaH = 300;
+
+const dnaSize = canvaW;
 const dnaX = 0;
 const dnaY = 100;
 const dnaposL = 66835;
 const dnaposR = 71265;
-const stroke = { color: "#f06", width: 2, linecap: "round" };
+const stroke = { color: "#000", width: 2, linecap: "round" };
 let dnaScalar = dnaposR - dnaposL;
 
-const canva = SVG().addTo("#geneTesting").size(dnaSize, canvaH);
+const canva = SVG().addTo("#geneTesting").size(canvaW, canvaH);
 
-/*DNA({
+DNA({
   canva,
-  dnaX : dnaX,
-  dnaY : dnaY,
-  dnaPosLeft : dnaposL,
-  dnaPosRight : dnaposR,
-  adnScalar : dnaScalar,
-  x : 100,
-  size : 100,
-  stroke : stroke
+  dnaX: dnaX,
+  dnaY: dnaY,
+  dnaSize: canvaW,
+  dnaPosLeft: dnaposL,
+  dnaPosRight: dnaposR,
+  stroke: stroke
 });
-*/
-const dna = canva.line(dnaX, dnaY, dnaSize, dnaY).stroke(stroke);
 
-const strokeAraC = { color: "#000", width: 5, dasharray: 15 };
+//const dna = canva.line(dnaX, dnaY, dnaSize, dnaY).stroke(stroke);
+
+const strokeAraC = { color: "#0F0", width: 2, dasharray: 5 };
+const strokeAraB = { color: "#00F", width: 2, dasharray: 5 };
+
 const fontArac = { color: "#000" };
 
 // Gene araA
@@ -70,7 +73,8 @@ Gene({
   x: g2x,
   name: g2Name,
   strand: g2strand,
-  size: g2size
+  size: g2size,
+  stroke: strokeAraB
 });
 
 //Gene araC
@@ -181,7 +185,8 @@ TF_binding_site({
   name: tf2Name,
   strand: tf2strand,
   size: tf2size,
-  color: "#77a2ff"
+  color: "#77a2ff",
+  stroke: strokeAraB
 });
 
 const tf3Name = "CRP";
@@ -202,7 +207,8 @@ TF_binding_site({
   name: tf3Name,
   strand: tf3strand,
   size: tf3size,
-  color: "green"
+  color: "green",
+  stroke: strokeAraC
 });
 
 const tf4Name = "Arac";

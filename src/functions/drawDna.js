@@ -1,4 +1,4 @@
-export default function DrawGene({
+export default function DrawDna({
   canva,
   dnaX = 0,
   dnaY = 100,
@@ -8,7 +8,7 @@ export default function DrawGene({
   separation = 0,
   x = 0,
   name = "DNA",
-  size = 100,
+  dnaSize = 100,
   strand = "forward",
   color = "#f06",
   opacity = 1,
@@ -23,7 +23,7 @@ export default function DrawGene({
     size: 12,
     separation: "middle"
   };
-
+  //const canvaW = 500;
   const dnaLletter = `${dnaPosLeft}`;
   const dnaRletter = `${dnaPosRight}`;
   canva
@@ -34,14 +34,15 @@ export default function DrawGene({
     .text(dnaRletter)
     .font(font)
     .move(
-      canva - (font["size"] * dnaRletter.length) / 2 - 5,
+      dnaSize - (font["size"] * dnaRletter.length) / 2 - 2,
       dnaY - font["size"] / 2
     );
+  // DNA Create
   const adn = canva
     .line(
-      dnaX + (font["size"] * dnaLletter.length) / 2 + 7,
+      dnaX + (font["size"] * dnaLletter.length) / 2 + 5,
       dnaY,
-      canva - (font["size"] * dnaRletter.length) / 2 - 7,
+      dnaSize - (font["size"] * dnaRletter.length) / 2 - 7,
       dnaY
     )
     .stroke(stroke)

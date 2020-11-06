@@ -5,15 +5,15 @@ const canvaW = 500,
 const scale = 1;
 
 // invoke Data
-let adnX = 0;
+let adnX = 10;
 let adnY = 100;
 let adnSize = canvaW;
 let adnScalar = 1000; //bp on adn track
-let separation = 0;
+let separation = 10;
 let x = 0; //leftPosition
 
 // ppGpp data
-let name = "DksA";
+let name = "ppGpp";
 let size = 150;
 let strand = "forward"; // default forward
 
@@ -45,15 +45,19 @@ let fy = adnY - separation - ppGppy;
 let ry = adnY + separation;
 let bx = xi + ppGppH - 10;
 
-/*// name draw
-const text = draw.text(name);
-text.font({
+// name draw
+const text1 = draw.text(name);
+text1.font({
   family: "Arial",
-  size: 18,
+  size: 14,
   separation: "middle"
 });
-*/
-
+const text2 = draw.text("ppGpp");
+text2.font({
+  family: "Arial",
+  size: 14,
+  separation: "middle"
+});
 //strand effect
 if (name === "DksA" && strand === "forward") {
   var DksAf = draw.ellipse(ppGppH, ppGppy);
@@ -62,8 +66,12 @@ if (name === "DksA" && strand === "forward") {
   DksAf.opacity(opacity);
   DksAf.move(xi, fy);
   ppGpp.stroke(stroke).move(bx, fy);
+  text1.move(xi + ppGppH / 4, adnY - separation - ppGppy + 8);
+  text2.move(xi + ppGppH + ppGppH / 8, adnY - separation - ppGppy + 8);
 } else if (name === "ppGpp" && strand === "forward") {
   ppGpp.move(xi, fy);
+  text1.move(xi + ppGppH / 4, adnY - separation - ppGppy + 8);
+  text2.clear();
 }
 
 if (name === "DksA" && strand === "reverse") {
@@ -73,8 +81,10 @@ if (name === "DksA" && strand === "reverse") {
   DksAr.opacity(opacity);
   DksAr.move(xi, ry);
   ppGpp.move(bx, ry);
-
-  //text.move(xi + tf_binding / 4, adnY + tf_binding - 10);
+  text1.move(xi + ppGppH / 4, adnY + separation + ppGppy / 4);
+  text2.move(xi + ppGppH + ppGppH / 8, adnY + separation + ppGppy / 4);
 } else if (name === "ppGpp" && strand === "reverse") {
   ppGpp.move(xi, ry);
+  text1.move(xi + ppGppH / 4, adnY + separation + ppGppy / 4);
+  text2.clear();
 }
