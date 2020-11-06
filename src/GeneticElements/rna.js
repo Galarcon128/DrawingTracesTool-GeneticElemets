@@ -14,16 +14,14 @@ let x = 0; //leftPosition
 
 // rna data
 let name = "rna";
-let size = 100;
+let size = 50;
 let strand = "revers"; // default forward
 
 // draw data
 let color = "#000";
-let stroke = { color: "#000", width: 3, linecap: "round", linejoin: "round" };
+let stroke = { color: "#000", width: 1, linecap: "round", linejoin: "round" };
 let sizeP = (size * adnSize) / adnScalar;
-if (sizeP <= 20) {
-  sizeP = 20;
-}
+
 //Canvas Create
 const draw = SVG().addTo("#rna").size(adnSize, canvaH);
 // DNA Create
@@ -33,10 +31,8 @@ const adn = draw
 
 //draw RNA
 const rnax = sizeP;
-var rnay = 50;
-if (rnay >= 10) {
-  rnay = 10;
-}
+var rnay = 10;
+
 var rna = draw.rect(rnax, rnay);
 
 //stroke
@@ -90,33 +86,20 @@ text.font({
   size: 18,
   separation: "middle"
 });
-
+var group = draw.group();
+group.add(rna);
+group.add(line1);
+group.add(line2);
+group.add(line3);
+group.add(line4);
+group.add(line5);
+group.add(line6);
 //strand effect
 if (strand === "reverse") {
-  var reversegroup = draw.group();
-  reversegroup.add(rna);
-  reversegroup.add(line1);
-  reversegroup.add(line2);
-  reversegroup.add(line3);
-  reversegroup.add(line4);
-  reversegroup.add(line5);
-  reversegroup.add(line6);
-  reversegroup.rotate(360);
-  reversegroup.move(x + adnX, adnY + separation);
-
+  group.move(x + adnX, adnY + separation);
   text.move(x + adnX + sizeP / 4, adnY + separation + rnay + 10);
 } else {
-  var forwardgroup = draw.group();
-  forwardgroup.add(rna);
-  forwardgroup.add(line1);
-  forwardgroup.add(line2);
-  forwardgroup.add(line3);
-  forwardgroup.add(line4);
-  forwardgroup.add(line5);
-  forwardgroup.add(line6);
-
-  forwardgroup.rotate(180);
-  forwardgroup.move(x + adnX, adnY - separation);
+  group.rotate(180);
+  group.move(x + adnX, adnY - separation);
   text.move(x + adnX + sizeP / 4, adnY - 50);
 }
-//console.log(size);

@@ -8,10 +8,12 @@ const scale = 1;
 // invoke data
 let dnaX = 0;
 let dnaY = 100;
+
 // dna data
 let dnaPosLeft = 800;
 let dnaPosRight = 1000;
 let dnaScalar = dnaPosRight - dnaPosLeft; //bp on adn track
+
 // draw data
 let color = "#f06";
 let opacity = 1;
@@ -21,6 +23,7 @@ let font = {
   size: 12,
   separation: "middle"
 };
+
 //Canvas Create
 const draw = SVG().addTo("#dna").size(canvaW, canvaH);
 //label create
