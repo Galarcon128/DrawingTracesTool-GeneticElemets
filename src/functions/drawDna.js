@@ -1,50 +1,65 @@
+//draw DNA v 1.0.0
 export default function DrawDna({
+  id,
   canva,
-  dnaX = 0,
-  dnaY = 100,
+  x = 0,
+  y = 100,
   dnaPosLeft = 800,
   dnaPosRight = 1000,
-  adnScalar = 1000,
-  separation = 0,
-  x = 0,
   name = "DNA",
-  dnaSize = 100,
-  strand = "forward",
   color = "#f06",
   opacity = 1,
-  stroke = { color: "#000", width: 1, linecap: "round" }
-}) {
-  if (!canva) {
-    return null;
-  }
-
-  let font = {
+  stroke = { color: "#000", width: 1, linecap: "round" },
+  font = {
     family: "Arial",
     size: 12,
     separation: "middle"
-  };
-  //const canvaW = 500;
+  }
+}) {
+  //validacion
+  if (!canva || !id) {
+    return null;
+  }
+  const canvaW = canva.node.clientWidth;
+  //const canvaH = canva.node.clientHeight;
+  //draw rext
   const dnaLletter = `${dnaPosLeft}`;
   const dnaRletter = `${dnaPosRight}`;
   canva
     .text(dnaLletter)
     .font(font)
-    .move(dnaX, dnaY - font["size"] / 2);
+    .move(x, y - font["size"] / 2);
   canva
     .text(dnaRletter)
     .font(font)
     .move(
-      dnaSize - (font["size"] * dnaRletter.length) / 2 - 2,
-      dnaY - font["size"] / 2
+      canvaW - (font["size"] * dnaRletter.length) / 2 - 2,
+      y - font["size"] / 2
     );
   // DNA Create
-  const adn = canva
-    .line(
-      dnaX + (font["size"] * dnaLletter.length) / 2 + 5,
-      dnaY,
-      dnaSize - (font["size"] * dnaRletter.length) / 2 - 7,
-      dnaY
-    )
-    .stroke(stroke)
-    .opacity(opacity);
+  const lx1 = x + (font["size"] * dnaLletter.length) / 2 + 5;
+  const lx2 = canvaW - (font["size"] * dnaRletter.length) / 2 - 7;
+  const dna = canva.line(lx1, y, lx2, y).stroke(stroke).opacity(opacity);
+  const widthActive = lx2 - lx1;
+  const forwardActive = y;
+  const reverseActive = y - stroke.width;
+  //
+  return {
+    id: id,
+    canva: canva,
+    draw: dna,
+    x: lx1,
+    y: y,
+    widthActive: widthActive,
+    forwardActive: forwardActive,
+    reverseActive: reverseActive,
+    posLeft: dnaPosLeft,
+    posRight: dnaPosRight,
+    Size: dnaPosRight - dnaPosLeft,
+    name: name,
+    color: color,
+    opacity: opacity,
+    stroke: stroke,
+    font: font
+  };
 }

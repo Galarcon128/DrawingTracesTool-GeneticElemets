@@ -12,7 +12,7 @@ let dnaY = 100;
 // dna data
 let dnaPosLeft = 800;
 let dnaPosRight = 1000;
-let dnaScalar = dnaPosRight - dnaPosLeft; //bp on adn track
+let dnaSize = dnaPosRight - dnaPosLeft; //bp on adn track
 
 // draw data
 let color = "#000";
@@ -29,6 +29,7 @@ const draw = SVG().addTo("#dna").size(canvaW, canvaH);
 //label create
 const dnaLletter = `${dnaPosLeft}`;
 const dnaRletter = `${dnaPosRight}`;
+console.log(draw.node.clientWidth);
 draw
   .text(dnaLletter)
   .font(font)
