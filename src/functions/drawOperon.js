@@ -1,40 +1,63 @@
+//DrawOperon v 0.1.0
+/**
+ * estructura lista (creo jeje)
+ * Problemas de Escala
+ */
+
 export default function DrawOperon({
+  id,
   canva,
-  adnX = 0,
-  adnY = 100,
-  adnSize = 200,
-  adnScalar = 1000,
-  separation = 0,
-  x = 0,
+  anchor,
+  dna,
+  separation = 10,
+  posLeft = 0,
+  posRigth = 20,
   name = "operonName",
-  size = 100,
   strand = "forward",
-  color = "purple",
+  color = "aqua",
   opacity = 1,
   stroke = { color: "#000", width: 1, linecap: "round" }
 }) {
-  if (!canva) {
+  if (!canva || !dna || !id || posLeft > posRigth) {
     return null;
   }
-  let sizeP = (size * adnSize) / adnScalar;
-  if (sizeP <= 30) {
-    sizeP = 30;
+  //atributos
+  const dnaX = dna.x,
+    size = posRigth - posLeft,
+    dnaY = dna.y,
+    widthActive = dna.widthActive,
+    dnaSize = dna.Size,
+    x = ((posLeft - dna.posLeft) * widthActive) / dnaSize;
+  let sizeP = (size * widthActive) / dnaSize;
+  // scale
+  let heigthActive = dna.forwardActive;
+  if (strand === "reverse") {
+    heigthActive = dna.reverseActive;
   }
-  const operonH = 40;
-  const rowW = 30;
-  const lx1 = sizeP + adnX + x;
+  const proportion = heigthActive * 0.1;
+  //atributos de cuerpo
+  const operonH = proportion;
+  const rowW = () => {
+    if (heigthActive * 0.5 > sizeP) {
+      return sizeP * 0.1;
+    }
+    return heigthActive * 0.1;
+  };
+  const lx1 = sizeP + dnaX + x;
   const ly1 = operonH;
-  const lx2 = sizeP + adnX - rowW + x;
-
+  const lx2 = sizeP + dnaX - rowW() + x;
+  let posX = x + dnaX;
+  let posY = dnaY - separation - operonH;
+  //Draw operon
   const operon = canva.path(
     " m " +
-      (x + adnX) +
+      (x + dnaX) +
       "," +
       operonH / 2 +
       " v " +
       operonH +
       " h " +
-      (sizeP - rowW) +
+      (sizeP - rowW()) +
       " L " +
       lx1 +
       "," +
@@ -45,25 +68,55 @@ export default function DrawOperon({
       operonH / 2 +
       " z"
   );
+  operon.move(posX, posY);
+  operon.id(id);
   operon.fill(color);
   operon.stroke(stroke);
   operon.opacity(opacity);
 
-  const text = canva.text(name);
-  text.font({
+  // name draw
+  const font = {
     family: "Arial",
-    size: 18,
-    separation: ""
-  });
-  const nlet = name.length;
-
+    size: operonH * 0.1,
+    separation: "middle"
+  };
+  const text = canva.text(name).font(font);
+  // reverse effect
   if (strand === "reverse") {
-    operon.rotate(180).move(x + adnX, -separation - adnY);
-    text.move(x + sizeP / 2 - nlet * 5, operonH + 15 + adnY + separation / 2);
-  } else {
-    let y = -separation + adnY - operonH * 2;
-    let xi = x + adnX;
-    text.move(x + sizeP / 2 - nlet * 5, operonH - 15 - separation / 2);
-    operon.move(xi, y);
+    if (!anchor) {
+      posX = x + dnaX;
+      posY = dnaY + separation;
+    }
+    operon.transform({
+      rotate: 180,
+      translateY: operonH * 2
+    });
+    //anchor
+    if (anchor) {
+      posX = anchor.posX;
+      posY = anchor.posY - separation - anchor.heigth;
+      if (anchor.strand === "reverse") {
+        posX = anchor.posX;
+        posY = anchor.posY + anchor.heigth + separation;
+      }
+    }
+    //return
+    return {
+      id: id,
+      canva: canva,
+      posX: posX,
+      posY: posY,
+      sizeP: sizeP,
+      heigth: operonH,
+      dna: dna,
+      separation: separation,
+      posLeft: posLeft,
+      posRigth: posRigth,
+      name: name,
+      strand: strand,
+      color: color,
+      opacity: color,
+      stroke: stroke
+    };
   }
 }

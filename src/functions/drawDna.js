@@ -1,4 +1,8 @@
-//draw DNA v 1.0.0
+//draw DNA v 0.9.0
+/**
+ * Falta estructura
+ *
+ */
 export default function DrawDna({
   id,
   canva,

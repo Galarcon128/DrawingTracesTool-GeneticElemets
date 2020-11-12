@@ -1,7 +1,7 @@
 // TransAtt 0.5.0
 /**
  * Falta el Return, y utilizar anchor
- *
+ * Falta id al elemento
  */
 export default function DrawTransnationalAttenuator({
   id,
@@ -29,7 +29,6 @@ export default function DrawTransnationalAttenuator({
     dnaSize = dna.Size,
     x = ((posLeft - dna.posLeft) * widthActive) / dnaSize;
   let sizeP = (size * widthActive) / dnaSize;
-
   //escala
   let heigthActive = dna.forwardActive;
   if (strand === "reverse") {
@@ -88,7 +87,6 @@ export default function DrawTransnationalAttenuator({
   if (strand === "reverse") {
     var group = canva.group();
     group.add(body);
-    //group.add(rect);
     group.add(head);
     group.transform({
       rotate: 180,
