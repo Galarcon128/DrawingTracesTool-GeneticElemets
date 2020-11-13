@@ -1,16 +1,16 @@
-// TransAtt 0.5.0
+// TransAtt 0.9.0
 /**
- * Falta el Return, y utilizar anchor
- * Falta id al elemento
+ *
+ *Falta testear
  */
 export default function DrawTransnationalAttenuator({
   id,
   canva,
   anchor,
   dna,
-  separation = 20,
-  posLeft = 10,
-  posRigth = 50,
+  separation = 0,
+  posLeft = 0,
+  posRigth = 10,
   name = "geneName",
   strand = "forward",
   color = "aqua",
@@ -20,7 +20,11 @@ export default function DrawTransnationalAttenuator({
   if (!canva || !dna || !id || posLeft > posRigth) {
     return null;
   }
-
+  if (anchor) {
+    posLeft = anchor.posLeft;
+    posRigth = posLeft + 1;
+    strand = anchor.strand;
+  }
   // atributos
   const dnaX = dna.x,
     dnaY = dna.y,
@@ -53,7 +57,12 @@ export default function DrawTransnationalAttenuator({
   let rectHeigth = proportion * 2;
   let rectX = dnaX + x + sizeP - bodyFootW;
   let rectY = dnaY - bodyHeigth;
-
+  let posX = x;
+  let posY = headY;
+  let traH = headH + bodyHeigth;
+  // anchor effect
+  if (anchor) {
+  }
   // dibujo de  BODY
   const body = canva.path(
     "M 0,0 v " +
@@ -84,20 +93,34 @@ export default function DrawTransnationalAttenuator({
   rect.fill(color).move(rectX, rectY);
   rect.stroke(stroke);
   // reverse effect
+  let group = canva.group();
+  group.add(body);
+  group.add(head);
+  group.add(rect);
   if (strand === "reverse") {
-    var group = canva.group();
-    group.add(body);
-    group.add(head);
     group.transform({
       rotate: 180,
-      translateY: bodyHeigth + headH
-    });
-    rect.transform({
-      rotate: 180,
-      translateX: -proportion - rectWidth / 3,
-      translateY: bodyHeigth + headH + separation
+      translateY: bodyHeigth + headH,
+      translateX: -sizeP / 2
     });
   }
-  //anchor effect
   //returns :C
+  return {
+    id: id,
+    canva: canva,
+    draw: group,
+    posX: posX,
+    posY: posY,
+    sizeP: sizeP,
+    heigth: traH,
+    dna: dna,
+    separation: separation,
+    posLeft: posLeft,
+    posRigth: posRigth,
+    name: name,
+    strand: strand,
+    color: color,
+    opacity: color,
+    stroke: stroke
+  };
 }

@@ -1,7 +1,6 @@
-//DrawGene v 0.6.0
+//DrawGene v 0.9.0
 /**
- * estructura lista (creo jeje)
- * Problemas de Escala
+ * falta testear
  */
 export default function DrawGene({
   id,
@@ -19,6 +18,11 @@ export default function DrawGene({
 }) {
   if (!canva || !dna || !id | (posLeft > posRigth)) {
     return null;
+  }
+  //anchor
+  if (anchor) {
+    posLeft = anchor.posLeft;
+    posRigth = posLeft + 10;
   }
   //atributos
   const dnaX = dna.x,
@@ -38,7 +42,7 @@ export default function DrawGene({
   const geneH = proportion;
   const rowW = () => {
     if (heigthActive * 0.1 > sizeP) {
-      return sizeP * 0.1;
+      return geneH * 0.3;
     }
     return heigthActive * 0.1;
   };
@@ -78,48 +82,36 @@ export default function DrawGene({
   gene.stroke(stroke);
   gene.opacity(opacity);
 
-  // name draw
-  const font = {
-    family: "Arial",
-    size: geneH * 0.1,
-    separation: "middle"
-  };
-  const text = canva.text(name).font(font);
   // reverse effect
   if (strand === "reverse") {
-    if (!anchor) {
-      posX = x + dnaX;
+    if (anchor) {
+      posX = x;
       posY = dnaY + separation;
     }
     gene.transform({
       rotate: 180,
       translateY: geneH * 2
     });
-    //anchor
-    if (anchor) {
-      posX = anchor.posX;
-      posY = anchor.posY - separation - anchor.heigth;
-      if (anchor.strand === "reverse") {
-        posX = anchor.posX;
-        posY = anchor.posY + anchor.heigth + separation;
-      }
-    }
-    return {
-      id: id,
-      canva: canva,
-      posX: posX,
-      posY: posY,
-      sizeP: sizeP,
-      heigth: geneH,
-      dna: dna,
-      separation: separation,
-      posLeft: posLeft,
-      posRigth: posRigth,
-      name: name,
-      strand: strand,
-      color: color,
-      opacity: color,
-      stroke: stroke
-    };
+    posY = geneH * 2 + posY;
   }
+  //anchor
+
+  return {
+    id: id,
+    canva: canva,
+    draw: gene,
+    posX: posX,
+    posY: posY,
+    sizeP: sizeP,
+    heigth: geneH,
+    dna: dna,
+    separation: separation,
+    posLeft: posLeft,
+    posRigth: posRigth,
+    name: name,
+    strand: strand,
+    color: color,
+    opacity: color,
+    stroke: stroke
+  };
 }

@@ -1,7 +1,6 @@
-//DrawOperon v 0.1.0
+//DrawOperon v 0.9.0
 /**
- * estructura lista (creo jeje)
- * Problemas de Escala
+ *falta testear
  */
 
 export default function DrawOperon({
@@ -9,9 +8,9 @@ export default function DrawOperon({
   canva,
   anchor,
   dna,
-  separation = 10,
+  separation = 0,
   posLeft = 0,
-  posRigth = 20,
+  posRigth = 10,
   name = "operonName",
   strand = "forward",
   color = "aqua",
@@ -20,6 +19,10 @@ export default function DrawOperon({
 }) {
   if (!canva || !dna || !id || posLeft > posRigth) {
     return null;
+  }
+  if (anchor) {
+    posLeft = anchor.posLeft;
+    posRigth = posLeft + 10;
   }
   //atributos
   const dnaX = dna.x,
@@ -73,50 +76,34 @@ export default function DrawOperon({
   operon.fill(color);
   operon.stroke(stroke);
   operon.opacity(opacity);
-
-  // name draw
-  const font = {
-    family: "Arial",
-    size: operonH * 0.1,
-    separation: "middle"
-  };
-  const text = canva.text(name).font(font);
   // reverse effect
   if (strand === "reverse") {
-    if (!anchor) {
+    if (anchor) {
       posX = x + dnaX;
       posY = dnaY + separation;
     }
     operon.transform({
       rotate: 180,
-      translateY: operonH * 2
+      translateY: operonH
     });
-    //anchor
-    if (anchor) {
-      posX = anchor.posX;
-      posY = anchor.posY - separation - anchor.heigth;
-      if (anchor.strand === "reverse") {
-        posX = anchor.posX;
-        posY = anchor.posY + anchor.heigth + separation;
-      }
-    }
-    //return
-    return {
-      id: id,
-      canva: canva,
-      posX: posX,
-      posY: posY,
-      sizeP: sizeP,
-      heigth: operonH,
-      dna: dna,
-      separation: separation,
-      posLeft: posLeft,
-      posRigth: posRigth,
-      name: name,
-      strand: strand,
-      color: color,
-      opacity: color,
-      stroke: stroke
-    };
+    //posY = operonH * 2 + posY;
   }
+  //return
+  return {
+    id: id,
+    canva: canva,
+    posX: posX,
+    posY: posY,
+    sizeP: sizeP,
+    heigth: operonH,
+    dna: dna,
+    separation: separation,
+    posLeft: posLeft,
+    posRigth: posRigth,
+    name: name,
+    strand: strand,
+    color: color,
+    opacity: color,
+    stroke: stroke
+  };
 }

@@ -1,6 +1,6 @@
-// Promoter 0.1.0
+// Promoter 0.2.0
 /**
- * Falta utilizar anchor
+ * Falta testear
  */
 export default function DrawPromoter({
   id,
@@ -19,7 +19,11 @@ export default function DrawPromoter({
   if (!canva || !dna || !id || posLeft > posRigth) {
     return null;
   }
-
+  //anchor
+  if (anchor) {
+    posLeft = anchor.posLeft;
+    posRigth = posLeft + 10;
+  }
   // atributos
   const dnaX = dna.x,
     dnaY = dna.y,
@@ -35,24 +39,36 @@ export default function DrawPromoter({
   }
   const proportion = heigthActive * 0.1;
   //atributos de Cuerpo
-  const horizontal = proportion + 20;
-  let altura = proportion + separation + 50;
+  const bodyH = proportion;
+  let bodyW = proportion + separation + 50;
   let px = x + dnaX;
-  let py = dnaY - altura;
+  let py = dnaY - bodyW;
 
   //atributos de Cabeza
-  let ax = x + dnaX + horizontal - 4;
-  let ay = dnaY - altura - 5;
+  let headH = proportion;
+  let ax = x + dnaX + bodyH - 4;
+  let ay = dnaY - bodyW - 5;
 
+  let PromH = bodyH + headH;
+  let posX = x;
+  let posY = ay;
   // draw body
-  const body = canva.path("M 0 0 V " + -altura + "H " + horizontal + "v");
+  const body = canva.path("M 0 0 V " + -bodyW + "H " + bodyH + "v");
   body.fill("none").move(px, py);
   body.stroke(stroke);
   // draw arrow
   var arrow = canva.path("m 0,0 5,5 -5,5 v 0");
   arrow.fill("none").move(ax, ay);
   arrow.stroke(stroke);
-
+  //anchor effect
+  if (anchor) {
+    posX = anchor.posX;
+    posY = anchor.posY - separation - anchor.heigth;
+    if (anchor.strand === "reverse") {
+      posX = anchor.posX;
+      posY = anchor.posY + anchor.heigth + separation;
+    }
+  }
   // reverse effect
   if (strand === "reverse") {
     var group = canva.group();
@@ -60,28 +76,25 @@ export default function DrawPromoter({
     group.add(arrow);
     group.transform({
       rotate: 180,
-      translateX: -horizontal,
-      translateY: altura + 5
+      translateX: -bodyH,
+      translateY: bodyW + 5
     });
-    return {
-      id: id,
-      canva: canva,
-      px: px,
-      py: py,
-      ax: ax,
-      ay: ay,
-      sizeP: sizeP,
-      heigth: horizontal.altura,
-      dna: dna,
-      separation: separation,
-      posLeft: posLeft,
-      posRigth: posRigth,
-      name: name,
-      strand: strand,
-      color: color,
-      opacity: color,
-      stroke: stroke
-    };
   }
-  //anchor effect
+  return {
+    id: id,
+    canva: canva,
+    sizeP: sizeP,
+    posX: posX,
+    posY: posY,
+    heigth: PromH,
+    dna: dna,
+    separation: separation,
+    posLeft: posLeft,
+    posRigth: posRigth,
+    name: name,
+    strand: strand,
+    color: color,
+    opacity: color,
+    stroke: stroke
+  };
 }

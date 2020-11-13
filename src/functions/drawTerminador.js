@@ -1,6 +1,6 @@
-// Terminador 0.1.0
+// Terminador 0.2.0
 /**
- * Falta utilizar anchor
+ * Falta testear
  */
 export default function DrawTerminador({
   id,
@@ -19,7 +19,11 @@ export default function DrawTerminador({
   if (!canva || !dna || !id || posLeft > posRigth) {
     return null;
   }
-
+  if (anchor) {
+    posLeft = anchor.posLeft;
+    posRigth = posLeft + 1;
+    strand = anchor.strand;
+  }
   // atributos
   const dnaX = dna.x,
     dnaY = dna.y,
@@ -85,25 +89,24 @@ export default function DrawTerminador({
       rotate: 180,
       translateY: bodyHeigth + headH
     });
-    return {
-      id: id,
-      canva: canva,
-      bodyX: bodyX,
-      bodyY: bodyY,
-      headX: headX,
-      headY: headY,
-      sizeP: sizeP,
-      heigth: bodyHeigth,
-      dna: dna,
-      separation: separation,
-      posLeft: posLeft,
-      posRigth: posRigth,
-      name: name,
-      strand: strand,
-      color: color,
-      opacity: color,
-      stroke: stroke
-    };
   }
-  //anchor effect
+  return {
+    id: id,
+    canva: canva,
+    bodyX: bodyX,
+    bodyY: bodyY,
+    headX: headX,
+    headY: headY,
+    sizeP: sizeP,
+    heigth: bodyHeigth,
+    dna: dna,
+    separation: separation,
+    posLeft: posLeft,
+    posRigth: posRigth,
+    name: name,
+    strand: strand,
+    color: color,
+    opacity: color,
+    stroke: stroke
+  };
 }

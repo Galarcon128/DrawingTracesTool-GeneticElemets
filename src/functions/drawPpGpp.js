@@ -1,6 +1,6 @@
-//DrawPpGpp v 0.1.0
+//DrawPpGpp v 0.9.0
 /**
- * Falta utilizar anchor
+ * falta testear
  */
 
 export default function DrawPpGpp({
@@ -10,15 +10,20 @@ export default function DrawPpGpp({
   dna,
   separation = 0,
   posLeft = 0,
-  posRigth = 150,
-  name = "ppGpp",
+  posRigth = 10,
+  name = "DksA",
   strand = "forward",
-  color = "aqua",
+  color = "#fff",
   opacity = 1,
   stroke = { color: "#000", width: 1, linecap: "round" }
 }) {
   if (!canva || !dna || !id | (posLeft > posRigth)) {
     return null;
+  }
+  // anchor effect
+  if (anchor) {
+    posLeft = anchor.posLeft;
+    posRigth = posLeft + 10;
   }
   //atributos
   const dnaX = dna.x,
@@ -36,78 +41,62 @@ export default function DrawPpGpp({
   const proportion = heigthActive * 0.1;
   //atributos de cuerpo
   let ppGppH = proportion;
-  let ppGppy = proportion / 2;
-  //Draw ppGpp
-  var ppGpp = canva.ellipse(ppGppH, ppGppy);
-  ppGpp.stroke(stroke);
-  ppGpp.fill(color);
-  //atributos
-  let xi = x + dnaX;
-  let fy = dnaY - separation - ppGppy;
-  let ry = dnaY + separation;
-  let bx = xi + ppGppH - 10;
+  let ppGppW = proportion / 2;
 
-  // name draw
-  const text1 = canva.text(name);
-  text1.font({
-    family: "Arial",
-    size: proportion / 5,
-    separation: "middle"
-  });
-  const text2 = canva.text("ppGpp");
-  text2.font({
-    family: "Arial",
-    size: proportion / 6,
-    separation: "middle"
-  });
-  // strand effect
-  if (name === "DksA" && strand === "forward") {
-    var DksAf = canva.ellipse(ppGppH, ppGppy);
-    DksAf.stroke(stroke);
-    DksAf.fill(color);
-    DksAf.opacity(opacity);
-    DksAf.move(xi, fy);
-    ppGpp.stroke(stroke).move(bx, fy);
-    text1.move(xi + ppGppH / 4, dnaY - separation - ppGppy + 8);
-    text2.move(xi + ppGppH + ppGppH / 8, dnaY - separation - ppGppy + 8);
-  } else if (name === "ppGpp" && strand === "forward") {
-    ppGpp.move(xi, fy);
-    text1.move(xi + ppGppH / 4, dnaY - separation - ppGppy + 3);
-    text2.clear();
+  let posX = x + dnaX;
+  let posY = dnaY - separation - ppGppW;
+  //Draw
+  const ppGpp = canva.ellipse(ppGppH, ppGppW);
+  ppGpp.move(posX, posY).stroke(stroke).fill(color);
+  const group = canva.group();
+  group.add(ppGpp);
+  const textP = canva.text("ppGpp");
+  textP
+    .font({
+      family: "Arial",
+      size: proportion / 5,
+      separation: "middle"
+    })
+    .move(posX + ppGppH / 6, posY + proportion / 7);
+  group.add(textP);
+  //DksA effect
+  if (name === "DksA") {
+    const dksA = canva.ellipse(ppGppH, ppGppW);
+    dksA
+      .move(posX + ppGppH / 1.3, posY)
+      .stroke(stroke)
+      .fill(color);
+    const textD = canva.text("DksA");
+    textD
+      .font({
+        family: "Arial",
+        size: proportion / 4,
+        separation: "middle"
+      })
+      .move(posX + ppGppH, posY + proportion / 7);
+    group.add(dksA);
+    group.add(textD);
   }
-  if (name === "DksA" && strand === "reverse") {
-    var DksAr = canva.ellipse(ppGppH, ppGppy);
-    DksAr.stroke(stroke);
-    DksAr.fill(color);
-    DksAr.opacity(opacity);
-    DksAr.move(xi, ry);
-    ppGpp.move(bx, ry);
-    text1.move(xi + ppGppH / 4, dnaY + separation + ppGppy / 4);
-    text2.move(xi + ppGppH, dnaY + separation + ppGppy / 4);
-  } else if (name === "ppGpp" && strand === "reverse") {
-    ppGpp.move(xi, ry);
-    text1.move(xi + ppGppH / 4, dnaY + separation + ppGppy / 4);
-    text2.clear();
-
-    return {
-      id: id,
-      canva: canva,
-      xi: xi,
-      fy: fy,
-      bx: bx,
-      ry: ry,
-      sizeP: sizeP,
-      heigth: ppGppH,
-      dna: dna,
-      separation: separation,
-      posLeft: posLeft,
-      posRigth: posRigth,
-      name: name,
-      strand: strand,
-      color: color,
-      opacity: color,
-      stroke: stroke
-    };
+  //strand effect
+  if (strand === "reverse") {
+    posY = dnaY + separation;
+    group.move(posX, posY);
   }
-  //anchor
+  return {
+    id: id,
+    canva: canva,
+    posX: posX,
+    posY: posY,
+    sizeP: sizeP,
+    heigth: ppGppH,
+    dna: dna,
+    separation: separation,
+    posLeft: posLeft,
+    posRigth: posRigth,
+    name: name,
+    strand: strand,
+    color: color,
+    opacity: color,
+    stroke: stroke
+  };
 }

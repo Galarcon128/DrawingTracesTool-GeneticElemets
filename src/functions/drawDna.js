@@ -1,7 +1,7 @@
 //draw DNA v 0.9.0
 /**
  * Falta estructura
- *
+ * Falta testear
  */
 export default function DrawDna({
   id,
