@@ -1,51 +1,87 @@
+// Promoter 0.1.0
+/**
+ * Falta utilizar anchor
+ */
 export default function DrawPromoter({
+  id,
   canva,
-  adnX = 0,
-  adnY = 100,
-  adnSize = 200,
-  adnScalar = 1000,
-  separation = 0,
-  x = 0,
-  name = "promoterName",
-  size = 100,
+  anchor,
+  dna,
+  separation = 20,
+  posLeft = 10,
+  posRigth = 50,
+  name = "Name",
   strand = "forward",
-  stroke = { color: "#000", width: 1, linecap: "round", dasharray: 3 }
+  color = "aqua",
+  opacity = 1,
+  stroke = { color: "#000", width: 1, linecap: "round" }
 }) {
-  if (!canva) {
+  if (!canva || !dna || !id || posLeft > posRigth) {
     return null;
   }
-  const horizontal = 30;
-  let altura = 40 + separation;
 
-  const promoter = canva.path("M 0 0 V " + -altura + "H " + horizontal + "v");
+  // atributos
+  const dnaX = dna.x,
+    dnaY = dna.y,
+    size = posRigth - posLeft,
+    widthActive = dna.widthActive,
+    dnaSize = dna.Size,
+    x = ((posLeft - dna.posLeft) * widthActive) / dnaSize;
+  let sizeP = (size * widthActive) / dnaSize;
+  //scale
+  let heigthActive = dna.forwardActive;
+  if (strand === "reverse") {
+    heigthActive = dna.reverseActive;
+  }
+  const proportion = heigthActive * 0.1;
+  //atributos de Cuerpo
+  const horizontal = proportion + 20;
+  let altura = proportion + separation + 50;
+  let px = x + dnaX;
+  let py = dnaY - altura;
 
-  let px = x + adnX;
-  let py = adnY - altura;
-  promoter.fill("none").move(px, py);
-  promoter.stroke(stroke);
+  //atributos de Cabeza
+  let ax = x + dnaX + horizontal - 4;
+  let ay = dnaY - altura - 5;
 
+  // draw body
+  const body = canva.path("M 0 0 V " + -altura + "H " + horizontal + "v");
+  body.fill("none").move(px, py);
+  body.stroke(stroke);
+  // draw arrow
   var arrow = canva.path("m 0,0 5,5 -5,5 v 0");
-  let ax = x + adnX + horizontal - 4;
-  let ay = adnY - altura - 5;
   arrow.fill("none").move(ax, ay);
   arrow.stroke(stroke);
 
-  // name draw
-  const text = canva.text(name);
-  text.font({
-    family: "Arial",
-    size: 10,
-    separation: "middle"
-  });
-
-  //strand effect
+  // reverse effect
   if (strand === "reverse") {
     var group = canva.group();
-    group.add(arrow).move(ax, ay);
-    group.add(promoter).move(x + adnX - horizontal, adnY);
-    group.rotate(180);
-    text.move(x + adnX - horizontal, adnY + altura + 5);
-  } else {
-    text.move(x + adnX, adnY - altura - 15);
+    group.add(body);
+    group.add(arrow);
+    group.transform({
+      rotate: 180,
+      translateX: -horizontal,
+      translateY: altura + 5
+    });
+    return {
+      id: id,
+      canva: canva,
+      px: px,
+      py: py,
+      ax: ax,
+      ay: ay,
+      sizeP: sizeP,
+      heigth: horizontal.altura,
+      dna: dna,
+      separation: separation,
+      posLeft: posLeft,
+      posRigth: posRigth,
+      name: name,
+      strand: strand,
+      color: color,
+      opacity: color,
+      stroke: stroke
+    };
   }
+  //anchor effect
 }

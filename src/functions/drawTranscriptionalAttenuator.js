@@ -1,74 +1,105 @@
-export default function DrawTranscriptionalAttenuator({
+// TranscripAtt 0.1.0
+/**
+ * Falta utilizar anchor
+ * return
+ */
+export default function DrawTransncriptionalAttenuator({
+  id,
   canva,
-  adnX = 0,
-  adnY = 100,
-  adnSize = 200,
-  adnScalar = 1000,
-  separation = 0,
-  x = 0,
+  anchor,
+  dna,
+  separation = 20,
+  posLeft = 10,
+  posRigth = 50,
   name = "Name",
-  size = 100,
   strand = "forward",
-  color = "none",
+  color = "aqua",
   opacity = 1,
   stroke = { color: "#000", width: 1, linecap: "round" }
 }) {
-  if (!canva) {
+  if (!canva || !dna || !id || posLeft > posRigth) {
     return null;
   }
-  let sizeP = (size * adnSize) / adnScalar;
 
-  var altura = 40 + separation;
-  let hline = 0;
-  if (sizeP >= 30) {
-    hline = sizeP / 2 - 15;
+  // atributos
+  const dnaX = dna.x,
+    dnaY = dna.y,
+    size = posRigth - posLeft,
+    widthActive = dna.widthActive,
+    dnaSize = dna.Size,
+    x = ((posLeft - dna.posLeft) * widthActive) / dnaSize;
+  let sizeP = (size * widthActive) / dnaSize;
+  // scale
+  let heigthActive = dna.forwardActive;
+  if (strand === "reverse") {
+    heigthActive = dna.reverseActive;
   }
+  const proportion = heigthActive * 0.1;
+  // atributos de Cuerpo
+  let bodyHeigth = proportion * 2 + separation;
+  let bodyFootH = proportion / 4;
+  let bodyFootW = 0;
+  if (sizeP >= proportion) {
+    bodyFootW = sizeP / 2 - 6 - proportion / 3;
+  }
+  let bodyX = x + dnaX;
+  let bodyY = dnaY - bodyHeigth - bodyFootH;
+  // atributos de Cabezas
+  let headH = proportion;
+  let headX = dnaX + x + sizeP / 2 - headH / 2 - 8;
+  let headY = dnaY - separation - 100;
+  // atributos de la linea
+  let lineX = x + dnaX + sizeP / 2;
+  let lineY = dnaY - bodyHeigth + 5;
 
-  var body = canva.path(
-    "M 0,0" +
-      "v " +
-      altura +
+  // dibujo de  BODY
+  const body = canva.path(
+    "M 0,0 v " +
+      bodyHeigth +
       " h -" +
-      hline +
-      " v 5 h " +
-      sizeP +
-      " v -5 h -" +
-      hline +
+      bodyFootW +
       " v " +
-      -altura
+      bodyFootH +
+      " h " +
+      sizeP +
+      " v -" +
+      bodyFootH +
+      " h -" +
+      bodyFootW +
+      " v " +
+      -bodyHeigth
   );
-  let bodyX = x + adnX;
-  let bodyY = adnY - altura - 5;
-  body.fill("none").move(bodyX, bodyY);
+  body.fill(color).move(bodyX, bodyY);
   body.stroke(stroke);
-
+  body.opacity(opacity);
+  // dibujo de HEAD's
   var head1 = canva.path(
     "m 25 55 c -11.9 -9.5 -5 -23 1.6 -25. l 0.0 -1.7 C 30 24.6 33.4 20 33.4 15 C 33.4 6.8 26.8 0.2 18.6 0.2 v 0 C 10.5 0.250109 3.90831 6.8556 3.9082 15.0039 C 3.91361 20.0093 5.7943 24.6707 10 27.3848 v 0.865234 v 26.75"
   );
   var head2 = canva.path(
-    "m 60 110 v 0 c 3.57289 -2.44514 5.73149 -6.64601 5.73214 -11.1554 c -0.000091 -7.33366 -5.60626 -13.2788 -12.5219 -13.2788 v 0 c -6.91559 0.0001 -12.5218 5.94519 -12.5219 13.2788 c 0.0046 4.50501 2.1627 8.70032 5.73214 11.1431 v 0.0122"
+    "m 60 110 v 0 c 3.5 -2.4 5.7 -6.6 5.7 -11.1 c -0.09 -7.3 -5.6 -13.2 -12.5 -13.2 v 0 c -6.91559 0.0001 -12.5218 5.94519 -12.5219 13.2788 c 0.0046 4.50501 2.1627 8.70032 5.73214 11.1431 v 0.0122"
   );
-
   let head = canva.group();
   head.add(head1);
   head.add(head2);
   head.fill(color).stroke(stroke);
-
-  let headX = x + adnX + hline - 6;
-  let headY = adnY - separation - 100;
   head.move(headX, headY);
 
-  var line = canva.path("m 0 -5 V" + altura + "");
-
-  let lineX = x + adnX + sizeP / 2;
-  let lineY = adnY - altura - 5;
+  // dibujo de LINE
+  var line = canva.path("m 0 5 V" + bodyHeigth + "");
   line.stroke(stroke).move(lineX, lineY);
 
+  // reverse effect
   if (strand === "reverse") {
     var group = canva.group();
-    group.add(head);
     group.add(body);
+    group.add(head);
     group.add(line);
-    group.rotate(180).move(x + adnX, headY - altura - 60);
+    group.transform({
+      rotate: 180,
+      translateY: bodyHeigth * 2
+    });
   }
+  //anchor effect
+  //returns
 }
