@@ -1,4 +1,5 @@
 // Falta todo jeje
+// :'c
 
 export default function DrawRna({
   canva,
