@@ -1,4 +1,4 @@
-// Terminador 0.2.0
+// Terminador 0.2.1
 /**
  * Falta testear
  */
@@ -45,13 +45,13 @@ export default function DrawTerminador({
   if (sizeP >= proportion) {
     bodyFootW = sizeP / 2 - proportion / 3;
   }
-  let bodyX = x + dnaX;
-  let bodyY = dnaY - bodyHeigth - bodyFootH;
+  let posX = x + dnaX;
+  let posY = dnaY - bodyHeigth - bodyFootH;
   //atributos de Cabeza
   let headH = proportion;
   let headX = dnaX + x + sizeP / 2 - headH / 2 - 2;
   let headY = dnaY - bodyHeigth - headH - 8;
-
+  let terminadorH = bodyHeigth + headH;
   // dibujo de  BODY
   const body = canva.path(
     "M 0,0 v " +
@@ -69,7 +69,7 @@ export default function DrawTerminador({
       " v " +
       -bodyHeigth
   );
-  body.fill(color).move(bodyX, bodyY);
+  body.fill(color).move(posX, posY);
   body.stroke(stroke);
   body.opacity(opacity);
   // dibujo de HEAD
@@ -93,12 +93,11 @@ export default function DrawTerminador({
   return {
     id: id,
     canva: canva,
-    bodyX: bodyX,
-    bodyY: bodyY,
-    headX: headX,
-    headY: headY,
+    draw: group,
+    posX: posX,
+    posY: posY,
     sizeP: sizeP,
-    heigth: bodyHeigth,
+    heigth: terminadorH,
     dna: dna,
     separation: separation,
     posLeft: posLeft,

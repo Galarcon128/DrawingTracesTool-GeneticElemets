@@ -1,4 +1,4 @@
-// Promoter 0.2.0
+// Promoter 0.2.1
 /**
  * Falta testear
  */
@@ -84,6 +84,7 @@ export default function DrawPromoter({
     id: id,
     canva: canva,
     sizeP: sizeP,
+    draw: group,
     posX: posX,
     posY: posY,
     heigth: PromH,

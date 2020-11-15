@@ -1,7 +1,6 @@
 // TranscripAtt 0.1.0
 /**
- * Falta utilizar anchor
- * return
+ * Falta testear
  */
 export default function DrawTransncriptionalAttenuator({
   id,
@@ -20,7 +19,11 @@ export default function DrawTransncriptionalAttenuator({
   if (!canva || !dna || !id || posLeft > posRigth) {
     return null;
   }
-
+  if (anchor) {
+    posLeft = anchor.posLeft;
+    posRigth = posLeft + 1;
+    strand = anchor.strand;
+  }
   // atributos
   const dnaX = dna.x,
     dnaY = dna.y,
@@ -52,6 +55,9 @@ export default function DrawTransncriptionalAttenuator({
   let lineX = x + dnaX + sizeP / 2;
   let lineY = dnaY - bodyHeigth + 5;
 
+  let posX = x;
+  let posY = headY;
+  let transcriH = headH + bodyHeigth;
   // dibujo de  BODY
   const body = canva.path(
     "M 0,0 v " +
@@ -97,9 +103,25 @@ export default function DrawTransncriptionalAttenuator({
     group.add(line);
     group.transform({
       rotate: 180,
-      translateY: bodyHeigth * 2
+      translateY: bodyHeigth + headH * 2
     });
   }
-  //anchor effect
-  //returns
+  return {
+    id: id,
+    canva: canva,
+    draw: group,
+    posX: posX,
+    posY: posY,
+    sizeP: sizeP,
+    heigth: transcriH,
+    dna: dna,
+    separation: separation,
+    posLeft: posLeft,
+    posRigth: posRigth,
+    name: name,
+    strand: strand,
+    color: color,
+    opacity: color,
+    stroke: stroke
+  };
 }

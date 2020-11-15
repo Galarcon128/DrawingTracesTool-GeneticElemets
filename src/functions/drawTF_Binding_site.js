@@ -10,7 +10,7 @@ export default function DrawTFBindingSite({
   separation = 0,
   posLeft = 0,
   posRigth = 10,
-  name = "DksA",
+  name = "Name",
   strand = "forward",
   color = "#fff",
   opacity = 1,

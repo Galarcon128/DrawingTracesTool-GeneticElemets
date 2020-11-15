@@ -92,6 +92,7 @@ export default function DrawOperon({
   return {
     id: id,
     canva: canva,
+    draw: operon,
     posX: posX,
     posY: posY,
     sizeP: sizeP,

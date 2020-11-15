@@ -1,78 +1,90 @@
-// Falta todo jeje
-// :'c
+//Draw RNA v 0.3.0
+/**
+ * revisar reverse (la separación la hace alrevés)
+ */
 
 export default function DrawRna({
+  id,
   canva,
-  adnX = 0,
-  adnY = 100,
-  adnSize = 200,
-  adnScalar = 1000,
+  anchor,
+  dna,
   separation = 0,
-  x = 0,
-  name = "geneName",
-  size = 100,
+  posLeft = 0,
+  posRigth = 10,
+  name = "Name",
   strand = "forward",
-  color = "aqua",
+  color = "#fff",
   opacity = 1,
   stroke = { color: "#000", width: 1, linecap: "round" }
 }) {
-  if (!canva) {
+  if (!canva || !dna || !id | (posLeft > posRigth)) {
     return null;
   }
-  let sizeP = (size * adnSize) / adnScalar;
+  // anchor effect
+  if (anchor) {
+    posLeft = anchor.posLeft;
+    posRigth = posLeft + 10;
+  }
+  //atributos
+  const dnaX = dna.x,
+    size = posRigth - posLeft,
+    dnaY = dna.y,
+    widthActive = dna.widthActive,
+    dnaSize = dna.Size,
+    x = ((posLeft - dna.posLeft) * widthActive) / dnaSize;
+  let sizeP = (size * widthActive) / dnaSize;
+  // scale
+  let heigthActive = dna.forwardActive;
+  if (strand === "reverse") {
+    heigthActive = dna.reverseActive;
+  }
+  const proportion = heigthActive * 0.1;
+  //atributos de rectangulo
+  let rnaH = sizeP;
+  let rnaW = sizeP / 3;
+  let posX = x + dnaX;
+  let posY = dnaY - separation - rnaW * 2;
 
-  const rnax = sizeP;
-  var rnay = 10;
-
-  var rna = canva.rect(rnax, rnay);
-
-  rna.stroke(stroke);
-  rna.fill("color");
-
-  const ly = adnY - separation - rnay;
-
-  let l = x + adnX + sizeP;
+  //atributos de lineas
+  let l = x + dnaX + sizeP;
   let i = l - sizeP / 5;
   let n = i - sizeP / 5;
   let e = n - sizeP / 5;
   let s = e - sizeP / 5;
   let p = s - sizeP / 5;
+  //let posY = dnaY - separation - rnaW;
 
+  //Draw rect
+  let rna = canva.rect(rnaH, rnaW);
+  rna.move(posX, posY);
+  rna.stroke(stroke);
+  rna.fill(color);
+  //Draw lines
   var line1 = canva
-    .line(l, 0, l, rnay * 2)
+    .line(l, 0, l, rnaW)
     .stroke(stroke)
-    .move(l, ly);
+    .move(l, posY + rnaW);
   var line2 = canva
-    .line(i, 0, i, rnay * 2)
+    .line(i, 0, i, rnaW)
     .stroke(stroke)
-    .move(i, ly);
+    .move(i, posY + rnaW);
   var line3 = canva
-    .line(n, 0, n, rnay * 2)
+    .line(n, 0, n, rnaW)
     .stroke(stroke)
-    .move(n, ly);
+    .move(n, posY + rnaW);
   var line4 = canva
-    .line(e, 0, e, rnay * 2)
+    .line(e, 0, e, rnaW)
     .stroke(stroke)
-    .move(e, ly);
+    .move(e, posY + rnaW);
   var line5 = canva
-    .line(s, 0, s, rnay * 2)
+    .line(s, 0, s, rnaW)
     .stroke(stroke)
-    .move(s, ly);
+    .move(s, posY + rnaW);
   var line6 = canva
-    .line(p, 0, p, rnay * 2)
+    .line(p, 0, p, rnaW)
     .stroke(stroke)
-    .move(p, ly);
+    .move(p, posY + rnaW);
 
-  let xi = x + adnX;
-  let y = adnY - separation;
-  rna.move(xi, y);
-
-  const text = canva.text(name);
-  text.font({
-    family: "Arial",
-    size: 18,
-    separation: "middle"
-  });
   var group = canva.group();
   group.add(rna);
   group.add(line1);
@@ -81,13 +93,26 @@ export default function DrawRna({
   group.add(line4);
   group.add(line5);
   group.add(line6);
-
   if (strand === "reverse") {
-    group.move(x + adnX, adnY + separation);
-    text.move(x + adnX + sizeP / 4, adnY + separation + rnay + 10);
-  } else {
     group.rotate(180);
-    group.move(x + adnX, adnY - separation);
-    text.move(x + adnX + sizeP / 4, adnY - 50);
+    group.move(posX, posY - rnaW * 2);
   }
+  return {
+    id: id,
+    canva: canva,
+    draw: group,
+    posX: posX,
+    posY: posY,
+    sizeP: sizeP,
+    heigth: rnaH,
+    dna: dna,
+    separation: separation,
+    posLeft: posLeft,
+    posRigth: posRigth,
+    name: name,
+    strand: strand,
+    color: color,
+    opacity: color,
+    stroke: stroke
+  };
 }
