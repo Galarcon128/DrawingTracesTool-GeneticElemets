@@ -1,6 +1,5 @@
-//draw DNA v 0.9.0
+//draw DNA v 0.9.1
 /**
- * Falta estructura
  * Falta testear
  */
 export default function DrawDna({
@@ -24,11 +23,17 @@ export default function DrawDna({
   if (!canva || !id) {
     return null;
   }
-  const canvaW = canva.node.clientWidth;
-  //const canvaH = canva.node.clientHeight;
-  //draw rext
+  //atributos de text
   const dnaLletter = `${dnaPosLeft}`;
   const dnaRletter = `${dnaPosRight}`;
+  //atributos de DNA
+  const canvaW = canva.node.clientWidth;
+  const lx1 = x + (font["size"] * dnaLletter.length) / 2 + 5;
+  const lx2 = canvaW - (font["size"] * dnaRletter.length) / 2 - 7;
+  const widthActive = lx2 - lx1;
+  const forwardActive = y;
+  const reverseActive = y - stroke.width;
+  //draw text
   canva
     .text(dnaLletter)
     .font(font)
@@ -40,14 +45,9 @@ export default function DrawDna({
       canvaW - (font["size"] * dnaRletter.length) / 2 - 2,
       y - font["size"] / 2
     );
-  // DNA Create
-  const lx1 = x + (font["size"] * dnaLletter.length) / 2 + 5;
-  const lx2 = canvaW - (font["size"] * dnaRletter.length) / 2 - 7;
+  //draw dna
   const dna = canva.line(lx1, y, lx2, y).stroke(stroke).opacity(opacity);
-  const widthActive = lx2 - lx1;
-  const forwardActive = y;
-  const reverseActive = y - stroke.width;
-  //
+  //return
   return {
     id: id,
     canva: canva,
