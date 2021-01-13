@@ -15,9 +15,9 @@ let adnScalar = 1000; //bp on adn track
 let separation = 0;
 let x = 100; //leftPosition
 // gene data
-let name = "araB";
+let name = "glnA";
 let size = 500;
-let strand = "revers"; // default forward
+let strand = "reverse"; // default forward
 // draw data
 let color = "aqua";
 let opacity = 1;
@@ -80,7 +80,7 @@ const nlet = name.length;
 // strand effect
 if (strand === "reverse") {
   gene.rotate(180).move(x + adnX, -separation - adnY);
-  text.move(x + sizeP / 2 - nlet * 5, geneH + adnY + separation / 2);
+  text.move(x + sizeP / 2 - nlet * 5, geneH + adnY + separation / 2 - 10);
 } else {
   let y = -separation + adnY - geneH * 2;
   let xi = x + adnX;

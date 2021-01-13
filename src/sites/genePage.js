@@ -8,7 +8,7 @@ import DNA from "../functions/drawDna";
 // DNA Create
 
 const canvaW = 1000,
-  canvaH = 300;
+  canvaH = 200;
 
 const dnaSize = canvaW;
 const dnaX = 0;
