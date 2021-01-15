@@ -12,12 +12,12 @@ let adnX = 0;
 let adnY = 100;
 let adnSize = canvaW;
 let adnScalar = 1000; //bp on adn track
-let separation = 10;
-let x = 0; //leftPosition
+let separation = 0;
+let x = 100; //leftPosition
 // gene data
-let name = "araC";
-let size = 879;
-let strand = "revers"; // default forward
+let name = "glnA";
+let size = 500;
+let strand = "reverse"; // default forward
 // draw data
 let color = "aqua";
 let opacity = 1;
@@ -66,6 +66,7 @@ const gene = draw.path(
 gene.fill(color);
 gene.stroke(stroke);
 gene.opacity(opacity);
+gene.id("gene");
 
 // name draw
 const text = draw.text(name);
@@ -79,7 +80,7 @@ const nlet = name.length;
 // strand effect
 if (strand === "reverse") {
   gene.rotate(180).move(x + adnX, -separation - adnY);
-  text.move(x + sizeP / 2 - nlet * 5, geneH + adnY + separation / 2);
+  text.move(x + sizeP / 2 - nlet * 5, geneH + adnY + separation / 2 - 10);
 } else {
   let y = -separation + adnY - geneH * 2;
   let xi = x + adnX;
